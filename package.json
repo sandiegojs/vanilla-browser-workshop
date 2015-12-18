@@ -1,0 +1,19 @@
+{
+  "name": "js-101-workshop",
+  "version": "1.0.0",
+  "description": "Beginnings in JavaScript",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandiegojs/js-101-workshop.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sandiegojs/js-101-workshop/issues"
+  },
+  "homepage": "https://github.com/sandiegojs/js-101-workshop#readme"
+}
