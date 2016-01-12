@@ -16,8 +16,8 @@ function serve() {
     server.notify.apply(server, [file])
   })
 
-  gulp.watch(['public/app/app.html'], ['display','dist'])
-  gulp.watch(['public/app/app.css'], ['styles','dist'])
+  gulp.watch(['app/**/*.js'], ['scripts'])
+  gulp.watch(['app/**/*.css'], ['styles'])
 }
 
 gulp.task('serve', serve)

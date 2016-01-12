@@ -1,0 +1,93 @@
+.input-group {
+    margin:10px auto;
+    max-width: 400px;
+    padding: 20px 12px 10px 20px;
+    font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.input-group {
+    padding: 0;
+    display: block;
+    list-style: none;
+    margin: 10px 0 0 0;
+}
+
+.input-group label{
+    margin:0 0 3px 0;
+    padding:0px;
+    display:block;
+    font-weight: bold;
+}
+
+.input-group input[type=text], 
+.input-group input[type=date],
+.input-group input[type=datetime],
+.input-group input[type=number],
+.input-group input[type=search],
+.input-group input[type=time],
+.input-group input[type=url],
+.input-group input[type=email],
+textarea, 
+select{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border:1px solid #BEBEBE;
+    padding: 7px;
+    margin:0px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;  
+}
+
+.input-group input[type=text]:focus, 
+.input-group input[type=date]:focus,
+.input-group input[type=datetime]:focus,
+.input-group input[type=number]:focus,
+.input-group input[type=search]:focus,
+.input-group input[type=time]:focus,
+.input-group input[type=url]:focus,
+.input-group input[type=email]:focus,
+.input-group textarea:focus, 
+.input-group select:focus{
+    -moz-box-shadow: 0 0 8px #88D5E9;
+    -webkit-box-shadow: 0 0 8px #88D5E9;
+    box-shadow: 0 0 8px #88D5E9;
+    border: 1px solid #88D5E9;
+}
+
+.input-group .field-divided{
+    width: 49%;
+}
+
+.input-group .field-long{
+    width: 100%;
+}
+
+.input-group .field-select{
+    width: 100%;
+}
+
+.input-group .field-textarea{
+    height: 100px;
+}
+
+.input-group input[type=submit], .input-group input[type=button]{
+    background: #4B99AD;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #fff;
+}
+
+.input-group input[type=submit]:hover, .input-group input[type=button]:hover{
+    background: #4691A4;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+}
+
+.input-group .required{
+    color:red;
+}

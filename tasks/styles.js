@@ -5,7 +5,7 @@ import rename from 'gulp-rename'
 let styles = () => {
   return gulp.src('app/**/*.css')
     .pipe(minify())
-    .pipe(rename('app.css'))
+    .pipe(rename('index.css'))
     .pipe(gulp.dest('public'))
 }
 
