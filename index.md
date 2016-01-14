@@ -42,7 +42,15 @@ This will be the endpoint for you to POST your data to, as well as GET data back
 
 
 ### Project Structure & Scripts to Build/Test
+Source files are in `app`. This is where you will do your development.
+Generated files are put in and served from `public`.
+Build (gulp) tasks are in `tasks`.
 
+To build source files, start the dev server and watch for changes:
+
+`$ gulp`
+
+Then browser to `localhost:3000`.
 
 
 ### Some HTML
