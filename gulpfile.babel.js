@@ -1,7 +1,6 @@
 'use strict'
 
 import gulp from 'gulp'
-import gutil from 'gulp-util'
 import requireDir from 'require-dir'
 import gls from 'gulp-live-server'
 
