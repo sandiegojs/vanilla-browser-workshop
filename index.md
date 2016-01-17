@@ -19,9 +19,9 @@ Prior to your arrival the following should be installed on your system:
     * mocha
 
 
-## Goal: Effectively use Vanilla Javascript instead of jQuery
+## Goal: Effectively use Vanilla Javascript in the Browser!
 
-Modern web developement workflows often rely on libraries like jQuery.  But using libraries can add a lot of unneeded bloat to your project.  This workshop will help you dig a little deeper into Javascript and using pure "vanilla" Javascript accomplish more without using the $.
+Modern web developement workflows often rely on libraries like jQuery.  But using libraries can add a lot of unneeded bloat to your project. This workshop will help you dig a little deeper into JavaScript and how to use the available browser APIs without using the $.
 
 This workshop will feature:
 
@@ -37,8 +37,59 @@ Here is what we will provide for you:
 
 ### API service
 
-This will be the endpoint for you to POST your data to, as well as GET data back from.
+Our app is a client-side application so we need to persist the data that is
+created to a backend service and database.
 
+We could use fixture data or a mock service for this, but some friendly backend
+developers have already made a working API for us, so let's use that.
+
+Our API is setup at https://sandiegojs-vanilla-workshop.herokuapp.com and supports the following endpoints
+
+
+<table class="table table-bordered table-striped">
+  <colgroup>
+    <col class="col-xs-1">
+    <col class="col-xs-3">
+    <col class="col-xs-5">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Verb</th><th>path</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td><td>/forms</td><td>List of forms</td>
+    </tr>
+    <tr>
+      <td>POST</td><td>/forms</td><td>Create a new form</td>
+    </tr>
+    <tr>
+      <td>GET</td><td>/forms/:id</td><td>Retrieve a form</td>
+    </tr>
+    <tr>
+      <td>PUT</td><td>/forms/:id</td><td>Update a form</td>
+    </tr>
+    <tr>
+      <td>DELETE</td><td>/forms/:id</td><td>Delete a form</td>
+    </tr>
+    <tr>
+      <td>GET</td><td>/skills</td><td>List of skills</td>
+    </tr>
+    <tr>
+      <td>POST</td><td>/skills</td><td>Create a new skill</td>
+    </tr>
+    <tr>
+      <td>GET</td><td>/skills/:id</td><td>Retrieve a skill</td>
+    </tr>
+    <tr>
+      <td>PUT</td><td>/skills/:id</td><td>Update a skill</td>
+    </tr>
+    <tr>
+      <td>DELETE</td><td>/skills/:id</td><td>Delete a skill</td>
+    </tr>
+  </tbody>
+</table>
 
 
 ### Project Structure & Scripts to Build/Test
