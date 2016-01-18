@@ -175,6 +175,16 @@ If you hit the submit button now, you should immediately see a pop-up message ne
 
 Neato! This is all taken care of for you by the browser out-of-the-box!
 
+### Validations
+
+Some `<input>` types have intrinsic constraints, such as `type=email`. If you look at the `public/index.html` you will see that our email field is currently setup as a `type=text`. Go ahead and change it.
+
+Once you have, we can test it out. Head over to the browser, type in a `Name` value (so that we don't get the required error) and type in a phoney string that doesn't look like an email address. Once you hit submit, you should see a nice message come up and tell you that your input doesn't look like an email.
+
+![email error message](https://s3.amazonaws.com/f.cl.ly/items/3y1l2h0R2x1Q0S1r351B/Screen%20Shot%202016-01-17%20at%204.52.45%20PM.png?v=e72c1557)
+
+If you want to learn more about validations that are available for inputs, [MDN has a great article covering the details](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation).
+
 
 ## Add submit event
 
