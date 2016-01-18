@@ -21,4 +21,6 @@ function serve() {
 
 gulp.task('serve', serve)
 
+gulp.task('build', ['scripts','styles'])
+
 gulp.task('default', ['scripts','styles','serve'])
