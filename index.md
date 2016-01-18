@@ -95,7 +95,7 @@ Our API is setup at https://sandiegojs-vanilla-workshop.herokuapp.com and suppor
 
 ## About the project and getting started
 
-This project uses the build tool [Gulp](http://gulpjs.com/) to automate a bunch of stuff for you. The gulp tasks are all defined in the `tasks` directory if you're the curious type. They are used to compile the sources and styles found within the `app` directory and put the final compiled source and styles into the `public` directory. The `public/index.html` will include the final styles and scripts inside of it.
+This project uses the build tool [Gulp][gulp] to automate a bunch of stuff for you. The gulp tasks are all defined in the `tasks` directory if you're the curious type. They are used to compile the sources and styles found within the `app` directory and put the final compiled source and styles into the `public` directory. The `public/index.html` will include the final styles and scripts inside of it.
 
 In order to get started, this boilerplate has been setup to show us a simple form right from the start. So let's dive in and give the gulp step a try!
 
@@ -121,7 +121,7 @@ livereload[tiny-lr] listening on 35729 ...
 folder "public" serving at http://localhost:3000
 ```
 
-As you can see, the scripts and styles are compiled, and then the server get's started. Now that we have that running, let's jump over to the browser and visit [localhost:3000](http://localhost:3000).
+As you can see, the scripts and styles are compiled, and then the server get's started. Now that we have that running, let's jump over to the browser and visit [localhost:300][localhost].
 
 ![image of boilerplate running](https://s3.amazonaws.com/f.cl.ly/items/1R3O1Q39443m1B2d3k23/Screen%20Shot%202016-01-17%20at%204.03.41%20PM.png?v=bd9646af)
 
@@ -167,7 +167,7 @@ Go ahead and update the `name` and `email` inputs to include this special attrib
 
 *After making any changes to this project, be sure to save the file and reload your browser!*
 
-Let's head over to [localhost:3000](http://localhost:3000) again and try it out.
+Let's head over to [localhost:3000][localhost] again and try it out.
 
 If you hit the submit button now, you should immediately see a pop-up message near the first missing input telling you the field is required like below.
 
@@ -183,7 +183,7 @@ Once you have, we can test it out. Head over to the browser, type in a `Name` va
 
 ![email error message](https://s3.amazonaws.com/f.cl.ly/items/3y1l2h0R2x1Q0S1r351B/Screen%20Shot%202016-01-17%20at%204.52.45%20PM.png?v=e72c1557)
 
-If you want to learn more about validations that are available for inputs, [MDN has a great article covering the details](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation).
+If you want to learn more about validations that are available for inputs, [MDN has a great article covering the details][mdn-validations].
 
 
 ## Add submit event
@@ -208,7 +208,10 @@ If you want to learn more about validations that are available for inputs, [MDN 
 
 ## Test with Mocha
 
+[localhost]: http://localhost:3000
 [git-scm]: http://git-scm.com/downloads
 [npm-g-without-sudo]: https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
 [node-install]: https://nodejs.org/download/
 [san diego js]: http://sandiegojs.org/
+[mdn-validations]: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation
+[gulp]: http://gulpjs.com/
