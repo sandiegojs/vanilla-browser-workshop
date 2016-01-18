@@ -144,7 +144,7 @@ Are you ready to get coding, yet?
 
 ### Heroku to Publish
 
-[REPLACE w/ heroku button to deploy]()
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/sandiegojs/vanilla-browser-workshop)
 
 
 ## HTML validate fields

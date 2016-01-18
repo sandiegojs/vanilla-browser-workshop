@@ -1,0 +1,6 @@
+{
+  "name": "Vanilla JavaScript in the Browser",
+  "description": "A workshop demonstrating JavaScript in the browser, no $ necessary",
+  "repository": "https://github.com/sandiegojs/vanilla-browser-workshop",
+  "keywords": ["javascript", "vanilla", "workshop", "sandiegojs"]
+}
