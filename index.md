@@ -19,7 +19,7 @@ Prior to your arrival the following should be installed on your system:
     * mocha
 
 
-## Goal: Effectively use Vanilla Javascript in the Browser!
+## Goal: Effectively use vanilla JavaScript in the browser!
 
 Modern web developement workflows often rely on libraries like jQuery.  But using libraries can add a lot of unneeded bloat to your project. This workshop will help you dig a little deeper into JavaScript and how to use the available browser APIs without using the $.
 
@@ -32,13 +32,14 @@ This workshop will feature:
 * Dynamic HTML
 * Testing with Mocha
 
+## The example
 
-Here is what we will provide for you:
+For this workshop, we are going to build out a business card creator. There is a simple html form inside of `public/index.html` that we will build upon and add life to. We'll collect common profile information that one would normally share professionally, like contact info and skills, and then display it.
 
-### API service
+## API service
 
-Our app is a client-side application so we need to persist the data that is
-created to a backend service and database.
+Our app is a client-side application so we need to persist the data that we are
+creating to a backend service and database.
 
 We could use fixture data or a mock service for this, but some friendly backend
 developers have already made a working API for us, so let's use that.
@@ -92,21 +93,54 @@ Our API is setup at https://sandiegojs-vanilla-workshop.herokuapp.com and suppor
 </table>
 
 
-### Project Structure & Scripts to Build/Test
-Source files are in `app`. This is where you will do your development.
-Generated files are put in and served from `public`.
-Build (gulp) tasks are in `tasks`.
+## About the project and getting started
 
-To build source files, start the dev server and watch for changes:
+This project uses the build tool [Gulp](http://gulpjs.com/) to automate a bunch of stuff for you. The gulp tasks are all defined in the `tasks` directory if you're the curious type. They are used to compile the sources and styles found within the `app` directory and put the final compiled source and styles into the `public` directory. The `public/index.html` will include the final styles and scripts inside of it.
+
+In order to get started, this boilerplate has been setup to show us a simple form right from the start. So let's dive in and give the gulp step a try!
+
+Type the following from the root of the project:
 
 `$ gulp`
 
-Then browser to `localhost:3000`.
+You should see some output similar to the following:
+
+```
+$ gulp
+[16:02:13] Requiring external module babel-core/register
+[16:02:14] Using gulpfile ~/Code/vanilla-browser-workshop/gulpfile.babel.js
+[16:02:14] Starting 'scripts'...
+[16:02:14] Starting 'styles'...
+[16:02:14] Starting 'serve'...
+[16:02:14] Finished 'serve' after 46 ms
+livereload[tiny-lr] listening on 35729 ...
+[16:02:15] Finished 'styles' after 175 ms
+[16:02:15] Finished 'scripts' after 355 ms
+[16:02:15] Starting 'default'...
+[16:02:15] Finished 'default' after 114 μs
+folder "public" serving at http://localhost:3000
+```
+
+As you can see, the scripts and styles are compiled, and then the server get's started. Now that we have that running, let's jump over to the browser and visit [localhost:3000](http://localhost:3000).
+
+![image of boilerplate running](https://s3.amazonaws.com/f.cl.ly/items/1R3O1Q39443m1B2d3k23/Screen%20Shot%202016-01-17%20at%204.03.41%20PM.png?v=bd9646af)
+
+Cool! We have a very simple form with some basic styling already good to go for us.
+
+**If you're having issues bug one of the instructors! We're here to help you out.**
 
 
-### Some HTML
+## The HTML
 
+We should know what kind of document we are working with before we create anything. Since the boilerplate was setup for us, we'll just need to open up the `public/index.html` file and take a look.
 
+You should see that the styles are included in the header from `public/index.css` and the script for our JavaScript is included at the top of the body from `public/index.js`.
+
+**ProTip™:** When the browser encounters a `<script>` tag, it is blocking - meaning the browser will immediately download and execute it. To load the `<script>` asynchronousy and not block the browser's parsing of the document, set `async=true` on the tag.
+
+Within the `public/index.html` you should see a basic form with labels and inputs. Familiarize yourself with the different fields.
+
+Are you ready to get coding, yet?
 
 ### Heroku to Publish
 
@@ -114,6 +148,33 @@ Then browser to `localhost:3000`.
 
 
 ## HTML validate fields
+
+Have you ever used a form where you didn't realize you missed a required field until after clicking the submit button, waiting for the page to send data off to the server, waiting for the page to reload, and then finally to get the perplexing red error message at the top? What a pain!
+
+Let's save our users the hastle and let them know right away that they are required to fill in certain fields _before_ sending anything off to the server.
+
+There are a few different ways to do this, and we will elaborate on this later, but the most basic way to get going with form validation is using the built-in HTML field validations.
+
+### Required fields
+
+We really only need the `name` and `email` field to be required. In order to make these inputs required, all we have to do is add the word `required` as an attribute on the `<input>` tag.
+
+For example:
+
+`<input type='text' placeholder='Name' required>`
+
+Go ahead and update the `name` and `email` inputs to include this special attribute.
+
+*After making any changes to this project, be sure to save the file and reload your browser!*
+
+Let's head over to [localhost:3000](http://localhost:3000) again and try it out.
+
+If you hit the submit button now, you should immediately see a pop-up message near the first missing input telling you the field is required like below.
+
+![required error box](https://s3.amazonaws.com/f.cl.ly/items/172n3w0f0h0f2d0y0i01/Screen%20Shot%202016-01-17%20at%204.43.54%20PM.png?v=b83630c4)
+
+Neato! This is all taken care of for you by the browser out-of-the-box!
+
 
 ## Add submit event
 
