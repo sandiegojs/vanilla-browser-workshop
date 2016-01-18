@@ -11,16 +11,16 @@ var Net  = {
         request.open(method, path, true);
         
         // default to an empty string
-        if (data === null || data === undefined) {
-            data = '';
-        } else {
+        // if (data === null || data === undefined) {
+        //     data = '';
+        // } else {
             
-            // strinfigy serializes objects into strings, try uncommenting ln 21
-            request.setRequestHeader('Content-Type', 'application/json');
-            data = JSON.stringify(data);
-            // console.dir(data);
+        //     // strinfigy serializes objects into strings, try uncommenting ln 21
+        //     request.setRequestHeader('Content-Type', 'application/json');
+        //     data = JSON.stringify(data);
+        //     // console.dir(data);
             
-        }
+        // }
         
         // Setup XHR eventhandler
         request.onreadystatechange = function () {
@@ -49,18 +49,6 @@ var Net  = {
     // default method to POST
     post: function (path, data, callback) {
         this.xhr('post', path, data, callback);  
-    },
-
-    getJson: function (path, callback) {
-        this.get(path, function (err, data) {
-            callback(err, JSON.parse(data));
-        });
-    },
-    
-    postJson: function (path, json, callback) {
-        this.xhr('post', path, json, function (err, data) {
-            callback(err, JSON.parse(data));
-        });
     }
 };
 
