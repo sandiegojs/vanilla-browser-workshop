@@ -17,6 +17,7 @@ Prior to your arrival the following should be installed on your system:
 0. Install these global dependencies using the `-g` flag (ex `npm install <package> -g`)
     * gulp
     * mocha
+0. Setup [Heroku Toolbelt] (if you plan to deploy your app on Heroku).
 
 
 ## Goal: Effectively use vanilla JavaScript in the browser!
@@ -144,8 +145,11 @@ Are you ready to get coding, yet?
 
 ### Heroku to Publish
 
+Heroku is a web hosting platform that allows developers to go from code to running apps in minutes.  It has a free tier, as well as a super fast workflow.  To try it out create a free account on Heroku, and then use the button below to automatically deploy this app directly from GitHub to Heroku.
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/sandiegojs/vanilla-browser-workshop)
 
+Read [Getting Started with Node.js on Heroku] for more information.
 
 ## HTML validate fields
 
@@ -215,3 +219,5 @@ If you want to learn more about validations that are available for inputs, [MDN 
 [san diego js]: http://sandiegojs.org/
 [mdn-validations]: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation
 [gulp]: http://gulpjs.com/
+[Heroku Toolbelt]: https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
+[Getting Started with Node.js on Heroku]: https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction
