@@ -4,16 +4,17 @@
   <link href='index.css' rel='stylesheet' media='screen' type='text/css'>
 </head>
 <body>
-  <script type='text/javascript' src='index.js'></script>
   <div class='container'>
     <div class='form-wrapper'>
-      <form class='form'>
+      <form id='profileForm' class='form'>
         <div class='input-group name'>
           <input type='text' placeholder='Name' required>
+          <span class="required" aria-live="polite"></span>
         </div>
 
         <div class='input-group email'>
-          <input type='email' placeholder='Email' required>
+          <input id='email' type='email' placeholder='Email' required>
+          <span class="required" aria-live="polite"></span>
         </div>
 
         <div class='input-group city'>
@@ -21,7 +22,8 @@
         </div>
 
         <div class='input-group state'>
-          <input type='text' placeholder='State'>
+          <input id='state' type='text' placeholder='State'>
+          <span class="required" aria-live="polite"></span>
         </div>
 
         <div class='input-group github'>
@@ -46,5 +48,6 @@
       </form>
     </div>
   </div>
+  <script type='text/javascript' src='index.js'></script>
 </body>
 </html>
