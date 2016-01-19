@@ -314,7 +314,293 @@ Although important we won't dive into the distinct between these two just yet. F
 ## Dom creation to rendered returned info
 
 ## Add JS Validation
+Earlier you added form validation using attributes. This is a quick and easy way to perform validation, but it does have limits. For example, you can't add custom error messages or styling. To get more flexibility and control, use JavaScript.
 
+In this section, you will be playing with the HTML5 constraint validation API to check and customize the state of a form element. You have several goals:
+
+- Provide a custom validation message when the Email the user types is invalid
+- Hide that custom validation message as soon as the email is valid
+- Add custom validation logic to the State field without using an attribute
+- Apply custom styling to the validation error messages
+- Prevent form submission if there are validation errors.
+
+To achieve these goals you will:
+
+0. Add a new file to handle validation logic.
+0. Add a keyup event listener to the email field to present a custom message
+0. Add a submit event listener to the form
+0. Prevent form submission if there are any errors
+0. Loop through the form elements
+0. Check the validity of each field
+0. Set or clear the validation error messages
+0. Add custom validation logic to the state field
+
+### Add a new file to handle validation logic
+
+0. In the `app` directory, create `validation.js`.
+
+This file will automatically be concatenated with any other js files during the build process.
+
+### Handle `keyup` event for email field
+
+0. Get a reference to email field. Hint: Use a query selector you learned about earlier.
+0. Add `keyup` event listener attached to the email field.
+0. Inside the event listener function, you will check the `email.validity.typeMismatch` property to determine if the email the user has typed is valid.
+
+```
+if (email.validity.typeMismatch) {
+
+} else {
+
+}
+```
+
+0. If there is a problem `typeMatch` will be `true`. This is your opportunity to set a custom error message using the `setCustomValidity` function.
+
+```
+if (email.validity.typeMismatch) {
+  email.setCustomValidity('Oops, can't send email to that.');
+} else {
+  email.setCustomValidity('');
+}
+```
+
+If you pass `''` to `setCustomValidity` the field will be considered valid.
+
+The complete event handler should look like this:
+
+```
+var email = document.querySelector('input[name="email"]');
+
+// Check for valid email while the user types
+email.addEventListener('keyup', function(event){
+  // see https://developer.mozilla.org/en-US/docs/Web/API/ValidityState for
+  // other validity states
+  if (email.validity.typeMismatch){
+    email.setCustomValidity('Oops, try a real email address.');
+  } else {
+    email.setCustomValidity('');
+  }
+  setError(email);
+}, false);
+```
+
+Try the new logic. Go to your form, add a name, but leave the email blank. Click Submit. Start typing your name in the Email field. Notice that now you see your custom message. Now type a valid email address. The message goes away as soon as the address is valid.
+
+### Handle `submit` event for form
+
+You can use the technique above to handle each validated field, but you are still stuck with the standard formatting for the messages. To get more control, you need to turn off the automatic validation and handle the submission event yourself.
+
+0. Get a reference to the form element. Hint: Use the tag name.
+0. Prevent the automatic validation behavior.
+
+`form.noValidate = true;`
+
+Pro Tip: You can achieve the same thing by adding a `novalidate` attribute to the form.
+
+0. Now add a `submit` event handler that calls a `validateForm` function.
+
+You should have the following:
+
+```
+var form = document.getElementsByTagName('form')[0];
+
+...
+
+form.noValidate = true;
+
+form.addEventListener('submit', validationForm, false);
+
+function validateForm(event){
+
+}
+```
+
+### Prevent submission if there are any errors
+
+Now that you turned off the automatic validation, the form will always submit! You certainly don't want that.
+
+0. If you didn't already create the `validateForm` function.
+0. Inside the function, get a reference to the form using the `event.target`.
+0. Have the form check if it is valid.
+
+```
+var form = event.target;
+if (!form.checkValidity()) {
+  // form is invalid
+}
+```
+
+0. Now prevent the submission if there is a problem.
+
+```
+var form = event.target;
+if (!form.checkValidity()) {
+  // form is invalid
+  event.preventDefault();
+}
+```
+
+0. Try it out! In the form, click Submit. Nothing happened? That's right. Now add a name and a valid email address and click Submit. Notice that the form submitted. In the next few steps, you will bring back the error messages.
+
+### Loop through the fields
+
+Every form has an elements array. You can use that loop through the fields.
+
+0. Create the loop above the form validity check.
+
+```
+var form = event.target;
+var f;
+for (f = 0; f < form.elements.length; f++){
+
+}
+
+if (!form.checkValidity()) {
+  // form is invalid
+  event.preventDefault();
+}
+```
+
+0. Within the loop, get a reference to the current field. `validateForm` should now look like:
+
+```
+function validateForm(event){
+  var form = event.target;
+  var f;
+  var field;
+
+  for (f = 0; f < form.elements.length; f++) {
+
+    // get field
+    field = form.elements[f];
+
+  }
+
+  if (!form.checkValidity()){
+    // form is invalid
+    event.preventDefault();
+  }
+}
+```
+
+The behavior of the form hasn't changed so charge on to the next section.
+
+### Check the field validity
+
+You know you will have custom logic for validating the state field, so use a function to encapsulate all of the field validation logic. Start with using the standard validation logic.
+
+0. Create a new function `isValid` that takes a field as a parameter.
+0. Like the form, fields have a `checkValidity` function. Use this function to determine the return value for the function. Here's how it should look:
+
+```
+function isValid(field){
+  return field.checkValidity();
+}
+```
+
+0. Now call this function from the loop inside the `validateForm` function.
+
+```
+...
+  for (f = 0; f < form.elements.length; f++) {
+    // get field
+    field = form.elements[f];
+
+    if(isValid(field)) {
+      // remove error styles and messages
+    } else {
+      // style field, show error, etc.
+    }
+  }
+...
+```
+
+### Set and clear error messages
+
+Now that you are looping through each field and checking its validity, you can use the information to format the feedback to the user. In the HTML, you may have noticed that below the fields that have validation, there is a `span` element. You will use this element to display feedback to the user.
+
+0. Create a `setError` function that takes a field as a parameter.
+0. Inside the function, get a reference to the `span` you will use to show the error. To do that, use the handy `nextElementSibling`.
+0. Now that you have a reference to the element, set its `innerHTML` to the field's `validationMessage`. The `validationMessage` is either the default message from the browser or a custom message you set. The finished function should loop like:
+
+```
+function setError(field){
+  var error = field.nextElementSibling;
+  if (error) error.innerHTML = field.validationMessage;
+}
+```
+
+0. Set up a similar function to clear the error text. Copy and paste the `setError` function.
+0. Change the function name to `clearError`.
+0. Instead of `field.validationMessage`, set the `innerHTML` to `''`. The complete function is:
+
+```
+function clearError(field){
+  var error = field.nextElementSibling;
+  if (error) error.innerHTML = '';
+}
+```
+
+0. Finish the logic by calling these function from `validateForm`. If the field is valid, call `clearError` and if not call `setError`.
+
+```
+...
+    if (isValid(field)) {
+      // remove error styles and messages
+      clearError(field);
+    } else {
+      // style field, show error, etc.
+      setError(field);
+    }
+...
+```
+
+0. Try it out. Click Submit. Do you see the error messages? Do the error messages disappear when you enter valid data?
+
+As you type in the email field, does the message change? No? What is missing from the `keyup` event listener?
+
+### Add custom validation logic to the state field
+
+Time for the bonus round! Custom validation logic could involve evaluating multiple fields on the form, making a call to the server, or performing some calculation in a worker thread. While those are beyond the time you have for this workshop, this section will walk you through creating a some custom logic. Keep in mind that there are better ways to enforce the logic presented in the here, but hey, use your imagination. ;-)
+
+You will add this logic to the top of the `isValid` function you created earlier.
+
+0. First, check if the field passed to the function is named `state`.
+0. If so, check if the state is in the list of valid states. Valid states include: CA, TX, NY.
+
+```
+function isValid(field){
+  // custom logic for state
+  if (field.name === 'state') {
+    var validStates = ['CA', 'TX', 'NY'];
+    if (validStates.indexOf(field.value) === -1) {
+      // invalid state
+    } else {
+      // valid state
+    }
+  }
+  return field.checkValidity();
+}
+```
+
+0. When the state is invalid, set a custom validity message. When it is not, set an empty string.
+
+```
+    ...
+    if (validStates.indexOf(field.value) === -1) {
+      // invalid state
+      field.setCustomValidity('Use CA, TX, or NY');
+    } else {
+      // valid state
+      field.setCustomValidity('');
+    }
+    ...
+```
+
+Now when you try to submit without a state or an invalid state, you will get an error message just like with name and email.
+
+That's it for validation! You may now add "HTML5 constraint validation API" to your resume. 
 
 ## Add skills (add more, delete)
 

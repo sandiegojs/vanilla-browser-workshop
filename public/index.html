@@ -1,19 +1,20 @@
 <html>
 <head>
   <title>Vanilla</title>
-  <link href='index.css' rel='stylesheet' media="screen" type="text/css">
+  <link href='index.css' rel='stylesheet' media='screen' type='text/css'>
 </head>
 <body>
-  <script async=true src='index.js'></script>
   <div class='container'>
     <div class='form-wrapper'>
       <form class='form'>
         <div class='input-group name'>
-          <input name="name" type='text' placeholder='Name'>
+          <input name="name" type='text' placeholder='Name' required>
+          <span class="required" aria-live="polite"></span>
         </div>
 
         <div class='input-group email'>
-          <input name ="email" type='text' placeholder='Email'>
+          <input name="email" type='email' placeholder='Email' required>
+          <span class="required" aria-live="polite"></span>
         </div>
 
         <div class='input-group city'>
@@ -22,6 +23,7 @@
 
         <div class='input-group state'>
           <input name="state" type='text' placeholder='State'>
+          <span class="required" aria-live="polite"></span>
         </div>
 
         <div class='input-group github'>
@@ -46,5 +48,6 @@
       </form>
     </div>
   </div>
+  <script type='text/javascript' src='index.js'></script>
 </body>
 </html>
