@@ -17,7 +17,7 @@ Prior to your arrival the following should be installed on your system:
 0. Install these global dependencies using the `-g` flag (ex `npm install <package> -g`)
     * gulp
     * mocha
-0. If you plan to deploy your app onto Heroku, setup [Heroku Toolbelt][heroku]
+0. If you plan to deploy your app onto Heroku, setup [Heroku Toolbelt][heroku-toolbelt]
 
 
 ## Goal: Effectively use vanilla JavaScript in the browser!
