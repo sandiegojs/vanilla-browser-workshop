@@ -243,7 +243,7 @@ Whenever dealing with a DOM node it's important to understand what type of eleme
 
 ## Event Handling
 
-When users interact with the webpage the DOM publishes these interactions as events, for example; `click`, `scroll`, `keypress`, and [more][mdn-events].
+When users interact with the web page the DOM publishes these interactions as events, for example; `click`, `scroll`, `keypress`, and [more][mdn-events].
 
 After selecting an element from the DOM, we can call it's [`addEventListener`][event-listener] method which will execute a callback function we provide any time that event occurs. Lets start by listening for a `click` on the `document` and trigger an `alert` whenever that event occurs.
 
@@ -268,7 +268,7 @@ Using this simple API we can trigger the complex logic we will be writing shortl
 
 ### Multiple Event Listeners
 
-One of the great things about event listeners is that we can attach multiple listeners per event, for example.
+One of the great things about event listeners is that we can attach multiple listeners per event. For example:
 
 ```
 function handlerOne() {
