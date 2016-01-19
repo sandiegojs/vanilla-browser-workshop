@@ -189,6 +189,32 @@ Once you have, we can test it out. Head over to the browser, type in a `Name` va
 
 If you want to learn more about validations that are available for inputs, [MDN has a great article covering the details][mdn-validations].
 
+## Dom selection
+
+In order to interact with the DOM the first thing you will need to understand is element selection. By selecting an element (DOM node) we get a reference to that element which allows us to take actions on it.
+
+There are many functions we can use to get a reference to a DOM node. Overtime these functions have been introduced to solve different needs. As such the browser support for them can vary. You should always research browser compatability to ensure they will work for your user base.
+
+- [querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)
+- [querySelectorAll](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)
+- [getElementById](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById)
+- [getElementsByClassName](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName)
+- [getElementsByName](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByName)
+- [getElementsByTagName](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByTagName)
+
+We are going to focus on `querySelector`. This function behaves similiar to jQuery in that it allows you to specify a [css selector](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_Started/Selectors) that will be used to find the first matching node. One of the nice feature of this function is that it is available both on the `document` as well as `element`. These mean you can take an existing element reference and query it for sub elements.
+
+Lets begin by selecting the input with a name attribute of `name`.
+
+    var inputName = document.querySelector('input[name="name"]')
+
+This returns us an [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) which has a `value` property available. Go ahead and set the value property to see an example of how you can change the DOM.
+
+	inputName.value = 'My new value!'
+	
+You should see the value you set refelected in the forms input.
+
+Whenever dealing with a DOM node it's important to understand what type of element you have and what are it's parents. That will determine the properties and functions available to you.
 
 ## Add submit event
 
@@ -202,7 +228,6 @@ If you want to learn more about validations that are available for inputs, [MDN 
 
 ## Add JS Validation
 
-## Dom selection
 
 ## Add skills (add more, delete)
 
