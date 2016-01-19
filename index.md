@@ -307,6 +307,44 @@ Although important, we won't dive into the distinction between these two just ye
 
 ## Add submit event
 
+Now that we've covered the basics of getting a DOM element and hooking into it's events, let's add a submit event 
+handler to the form. Later, we'll use this handler to kick off a request to the backend.
+
+To start create a new file called `main.js` in the app directory.
+
+Our first step in this new file is to get a reference to the form element. Create a variable named `form`, and assign 
+the form DOM element on the page to it.
+
+`var form = document.querySelector('form')`
+
+On the next line create a `submitHandler` function. We will need to have the event passed into the handler available to 
+us so add the parameter `evt` to the function declaration.
+
+`function submitHandler(evt) {}`
+
+We will be using the `preventDefault` method on the event object. This handy method will stop the form from submitting 
+to the backend so that we can submit this information using AJAX. Let's also throw in an `alert` so that we can see some 
+feedback from the submit handler. Otherwise, when we click on the submit button nothing will happen which can be 
+confusing. Add the two new commands to the submit handler declaration like below. 
+
+```
+function submitHandler (evt) {
+    evt.preventDefault()
+    alert('submit!')
+}
+```
+
+The final step is to hook the form element we acquired above to the submit handler just after it. Use the 
+`addEventListener` method on the form variable and pass in the event we want to listen for (submit) as well as the 
+custom handler we wrote.
+
+`form.addEventListener('submit', submitHandler)`
+
+Now refresh your page and you should be able to submit the form after filling out the two required fields, but instead 
+of the page refreshing and losing everything you've entered the page will show you an alert and you won't lose any of 
+the information you typed. Cool!
+
+
 ## Build XHR and submit
 
 ## Handle request
