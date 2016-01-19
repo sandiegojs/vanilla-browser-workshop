@@ -189,10 +189,62 @@ Once you have, we can test it out. Head over to the browser, type in a `Name` va
 
 If you want to learn more about validations that are available for inputs, [MDN has a great article covering the details][mdn-validations].
 
+## Event Handling
+
+When users interact with the webpage the DOM publishes these interactions as events, for example; `click`, `scroll`, `keypress` and [more](https://developer.mozilla.org/en-US/docs/Web/Events).
+
+By selecting an element from the DOM we can [`addEventListener`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) which will execute a callback function we provide any time that event occurs. Lets start by listening for a `click` on the `document` and trigger an `alert` whenever that event occurs.
+
+  function handler() {
+    alert('user clicked on the page');
+  };
+
+  document.addEventListener('click', handler);
+
+Now if you click on the page you should receive an alert with your message. Alerting users every time they click the page can get annoying so lets remove that event listener.
+
+  document.removeEventListener('click', handler)
+
+It's important to note that in order for us to be able to remove an event listener we need to name our functions so we can specify what to remove for that event.
+
+Using this simple API we can trigger complex logic contained with in provided functions.
+
+
+### Multiple Event Listeners
+
+One of the great things about event listeners is that we can attach multiple listeners per event, for example.
+
+  function handlerOne() {
+    // Do some logic
+  }
+
+  function handlerTwo() {
+    // Do some logic
+  }
+
+  document.addEventListener('click', handlerOne)
+  document.addEventListener('click', handlerTwo)
+
+Now both of these functions will be executed whenever someone clicks the page.
+
+### Event Listener Parameter
+
+When we attach callback functions to events these functions are passed an event parameter. The type of event given will change depending on the type input device which triggered it. Since we are listening for a `click` event we will receive a [`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent).
+
+  function logEvent(evt) {
+    console.log(evt);
+  }
+  document.addEventListener('click', logEvent)
+
+If you inspect this event in the console you will see there are quite a few properties available to us. The ones most commonly used are `target` and `currentTarget`.
+
+`target` is the element who dispatched the event.
+
+`currentTarget` is the element who handled the event during the event capture (a.k.a bubbling) phase.
+
+Although important we won't dive into the distinct between these two just yet. For our purposes we are going to use the `currentTarget` event to always get a reference to the element who has the event listener listening for the event.
 
 ## Add submit event
-
-## Event Handling
 
 ## Build XHR and submit
 
