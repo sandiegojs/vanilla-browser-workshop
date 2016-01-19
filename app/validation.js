@@ -1,12 +1,12 @@
-var form = document.getElementById('profileForm');
-var email = document.getElementById('email');
+var form = document.getElementsByTagName('form')[0];
+var email = document.querySelector('input[name="email"]');
 
 // Check for valid email while the user types
 email.addEventListener('keyup', function(event){
   // see https://developer.mozilla.org/en-US/docs/Web/API/ValidityState for
   // other validity states
   if (email.validity.typeMismatch){
-    email.setCustomValidity('Please provide a valid email address.');
+    email.setCustomValidity('Oops, try a real email address.');
   } else {
     email.setCustomValidity('');
   }
@@ -23,17 +23,17 @@ form.addEventListener('submit', validateForm, false);
 
 function validateForm(event){
   var form = event.target;
-  var f = 0;
+  var f;
   var field;
 
   // loop all fields
-  for (f; f < form.elements.length; f++) {
+  for (f = 0; f < form.elements.length; f++) {
 
     // get field
     field = form.elements[f];
 
     // skip this field if we don't care about the it or its type
-    if (shouldIgnore(field)) continue;
+    //if (shouldIgnore(field)) continue;
 
     if (isValid(field)) {
       // remove error styles and messages
@@ -49,22 +49,22 @@ function validateForm(event){
     event.preventDefault();
   }
 }
-
-function shouldIgnore(field){
-  var type = field.nodeName;
-  // ignore buttons, fieldsets, etc.
-  return (type !== 'INPUT' && type !== 'TEXTAREA' && type !== 'SELECT');
-}
-
+//
+////function shouldIgnore(field){
+////  var type = field.nodeName;
+////  // ignore buttons, fieldsets, etc.
+////  return (type !== 'INPUT' && type !== 'TEXTAREA' && type !== 'SELECT');
+////}
+//
 function isValid(field){
   // custom logic for state
-  if (field.id === 'state') {
+  if (field.name === 'state') {
     var validStates = ['CA', 'TX', 'NY'];
     if (validStates.indexOf(field.value) === -1) {
-      // setting a message sets the field as invalid
+      // invalid state
       field.setCustomValidity('Use CA, TX, or NY');
     } else {
-      // clearing the message sets it as valid
+      // valid state
       field.setCustomValidity('');
     }
   }
@@ -78,5 +78,5 @@ function clearError(field){
 
 function setError(field){
   var error = field.nextElementSibling;
-  error.innerHTML = field.validationMessage;
+  if (error) error.innerHTML = field.validationMessage;
 }
