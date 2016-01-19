@@ -17,7 +17,7 @@ Prior to your arrival the following should be installed on your system:
 0. Install these global dependencies using the `-g` flag (ex `npm install <package> -g`)
     * gulp
     * mocha
-0. Setup [Heroku Toolbelt] (if you plan to deploy your app on Heroku).
+0. If you plan to deploy your app onto Heroku, setup [Heroku Toolbelt][heroku]
 
 
 ## Goal: Effectively use vanilla JavaScript in the browser!
@@ -37,10 +37,29 @@ This workshop will feature:
 
 For this workshop, we are going to build out a business card creator. There is a simple html form inside of `public/index.html` that we will build upon and add life to. We'll collect common profile information that one would normally share professionally, like contact info and skills, and then display it.
 
+## Keep your resources handy
+
+Workshops are fun and can be a fast way to learn while building something potentially reusable. There will come a time, however, when you'll want to reference the API and see if there are other methods or functionality that you didn't know existed.
+
+A really good open-source resource that also provides great offline functionality for you future digital nomads is [DevDocs.io][devdocs]. You can select the different APIs you want to be immediately searchable and they cover everything from the browser, to node, to rails, to elixer, and even more you never even knew about!
+
+For this workshop, it maybe useful to reference the sections that will align with this workshop
+
+* [DOM API][dom]
+* [Browser Event API][events]
+* [Using Cookies][cookies]
+* [XHR Requests][xhr]
+* [Testing with Mocha][mocha]
+
+Another good resource for learning about the available APIs and even the internals of how a browser parses, executes and draws a page, is [Mozilla Developer Network][mdn]
+
+**Have any other great resources you've used? We would love to hear about them and share them with the other attendees!**
+
+
 ## API service
 
-Our app is a client-side application so we need to persist the data that we are
-creating to a backend service and database.
+Our app is a client-side application, meaning it will be running in a user's browser. We will need to persist the data that we are
+creating to a backend service and database so that we can recall it later.
 
 We could use fixture data or a mock service for this, but some friendly backend
 developers have already made a working API for us, so let's use that.
@@ -143,14 +162,6 @@ Within the `public/index.html` you should see a basic form with labels and input
 
 Are you ready to get coding, yet?
 
-### Heroku to Publish
-
-Heroku is a web hosting platform that allows developers to go from code to running apps in minutes.  It has a free tier, as well as a super fast workflow.  To try it out create a free account on Heroku, and then use the button below to automatically deploy this app directly from GitHub to Heroku.
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/sandiegojs/vanilla-browser-workshop)
-
-Read [Getting Started with Node.js on Heroku] for more information.
-
 ## HTML validate fields
 
 Have you ever used a form where you didn't realize you missed a required field until after clicking the submit button, waiting for the page to send data off to the server, waiting for the page to reload, and then finally to get the perplexing red error message at the top? What a pain!
@@ -212,6 +223,14 @@ If you want to learn more about validations that are available for inputs, [MDN 
 
 ## Test with Mocha
 
+## Heroku to Publish
+
+[Heroku][heroku] is a web hosting platform that allows developers to go from code to running apps in minutes.  It has a free tier, as well as a super fast workflow. To try it out create a free account on Heroku, and then use the button below to automatically deploy this app directly from GitHub to a running Heroku instance.
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/sandiegojs/vanilla-browser-workshop)
+
+Read [Getting Started with Node.js on Heroku][node-heroku] for more information.
+
 [localhost]: http://localhost:3000
 [git-scm]: http://git-scm.com/downloads
 [npm-g-without-sudo]: https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
@@ -219,5 +238,13 @@ If you want to learn more about validations that are available for inputs, [MDN 
 [san diego js]: http://sandiegojs.org/
 [mdn-validations]: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation
 [gulp]: http://gulpjs.com/
-[Heroku Toolbelt]: https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
-[Getting Started with Node.js on Heroku]: https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction
+[heroku]: http://heroku.com
+[heroku-toolbelt]: https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
+[heroku-node]: https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction
+[devdocs]: http://devdocs.io
+[dom]: https://devdocs.io/dom/
+[events]: https://devdocs.io/dom_events
+[cookies]: https://devdocs.io/dom/document/cookie
+[xhr]: https://devdocs.io/dom/xmlhttprequest
+[mocha]: https://devdocs.io/mocha/
+[mdn]: https://developer.mozilla.org/en-US/
