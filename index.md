@@ -212,11 +212,13 @@ But as you will see there is a large API exposed by the DOM which allows us to c
 
 To visualize this all you need to do is open your web inspector and look at the `Elements` tab to see this structure realized. Each one of those nodes (elements) has many properties and functions you can take advantage off.
 
+![element inspector](https://s3.amazonaws.com/f.cl.ly/items/2o2Y3L1w433t2p1c2M38/kfm9fl7Prq.gif?v=8c898ff8)
+
 ## Dom selection
 
-In order to interact with the DOM the first thing you will need to understand is element selection. By selecting an element (DOM node) we get a reference to that element which allows us to take actions on it.
+In order to interact with the DOM within JavaScript, the first thing you will need to understand is element selection. By selecting an element (DOM node) we get a reference to that element which allows us to take actions on it.
 
-There are many functions we can use to get a reference to a DOM node. Overtime these functions have been introduced to solve different needs. As such the browser support for them can vary. You should always research browser compatability to ensure they will work for your user base.
+There are many functions we can use to get a reference to a DOM node. Overtime these functions have been introduced to solve different needs. As such, the browser support for them can vary. You should always research browser compatability to ensure they will work for your user base.
 
 - [querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)
 - [querySelectorAll](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)
@@ -225,13 +227,13 @@ There are many functions we can use to get a reference to a DOM node. Overtime t
 - [getElementsByName](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByName)
 - [getElementsByTagName](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByTagName)
 
-We are going to focus on `querySelector`. This function behaves similiar to jQuery in that it allows you to specify a [css selector](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_Started/Selectors) that will be used to find the first matching node. One of the nice feature of this function is that it is available both on the `document` as well as `element`. These mean you can take an existing element reference and query it for sub elements.
+We are going to focus on `querySelector`. This function behaves similiar to jQuery in that it allows you to specify a [css selector][css-selector] that will be used to find the first matching node. One of the nice feature of this function is that it is available both on the `document` as well as `element`. These mean you can take an existing element reference and query it for sub elements.
 
 Lets begin by selecting the input with a name attribute of `name`.
 
     var inputName = document.querySelector('input[name="name"]')
 
-This returns us an [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) which has a `value` property available. Go ahead and set the value property to see an example of how you can change the DOM.
+This returns us an [`HTMLInputElement`][html-input] which has a `value` property available. Go ahead and set the value property to see an example of how you can change the DOM.
 
 	inputName.value = 'My new value!'
 
@@ -243,17 +245,21 @@ Whenever dealing with a DOM node it's important to understand what type of eleme
 
 When users interact with the webpage the DOM publishes these interactions as events, for example; `click`, `scroll`, `keypress` and [more](https://developer.mozilla.org/en-US/docs/Web/Events).
 
-By selecting an element from the DOM we can [`addEventListener`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) which will execute a callback function we provide any time that event occurs. Lets start by listening for a `click` on the `document` and trigger an `alert` whenever that event occurs.
+By selecting an element from the DOM we can [`addEventListener`][event-listener] which will execute a callback function we provide any time that event occurs. Lets start by listening for a `click` on the `document` and trigger an `alert` whenever that event occurs.
 
-  function handler() {
-    alert('user clicked on the page');
-  };
+```
+function handler() {
+  alert('user clicked on the page')
+}
 
-  document.addEventListener('click', handler);
+document.addEventListener('click', handler)
+```
 
 Now if you click on the page you should receive an alert with your message. Alerting users every time they click the page can get annoying so lets remove that event listener.
 
-  document.removeEventListener('click', handler)
+```
+document.removeEventListener('click', handler)
+```
 
 It's important to note that in order for us to be able to remove an event listener we need to name our functions so we can specify what to remove for that event.
 
@@ -264,27 +270,32 @@ Using this simple API we can trigger complex logic contained with in provided fu
 
 One of the great things about event listeners is that we can attach multiple listeners per event, for example.
 
-  function handlerOne() {
-    // Do some logic
-  }
+```
+function handlerOne() {
+  // Do some logic
+}
 
-  function handlerTwo() {
-    // Do some logic
-  }
+function handlerTwo() {
+  // Do some logic
+}
 
-  document.addEventListener('click', handlerOne)
-  document.addEventListener('click', handlerTwo)
+document.addEventListener('click', handlerOne)
+document.addEventListener('click', handlerTwo)
+```
 
 Now both of these functions will be executed whenever someone clicks the page.
 
 ### Event Listener Parameter
 
-When we attach callback functions to events these functions are passed an event parameter. The type of event given will change depending on the type input device which triggered it. Since we are listening for a `click` event we will receive a [`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent).
+When we attach callback functions to events these functions are passed an event parameter. The type of event given will change depending on the type input device which triggered it. Since we are listening for a `click` event we will receive a [`MouseEvent`][mouse-event].
 
-  function logEvent(evt) {
-    console.log(evt);
-  }
-  document.addEventListener('click', logEvent)
+```
+function logEvent(evt) {
+  console.log(evt);
+}
+
+document.addEventListener('click', logEvent)
+```
 
 If you inspect this event in the console you will see there are quite a few properties available to us. The ones most commonly used are `target` and `currentTarget`.
 
@@ -338,3 +349,7 @@ Read [Getting Started with Node.js on Heroku][node-heroku] for more information.
 [xhr]: https://devdocs.io/dom/xmlhttprequest
 [mocha]: https://devdocs.io/mocha/
 [mdn]: https://developer.mozilla.org/en-US/
+[css-selector]: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_Started/Selectors
+[html-input]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement
+[event-listener]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+[mouse-event]: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
