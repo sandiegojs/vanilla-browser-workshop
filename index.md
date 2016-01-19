@@ -309,29 +309,35 @@ Although important we won't dive into the distinct between these two just yet. F
 
 ## Build XHR and submit
 
-Now that we have our data we need to send it to the server using an XHR or XMLHttpRequest. 
-This allows us to communicate with the server without changing pages. Let's make an XHR function to put in our event handler.
-
+Now that we have our data we need to send it to the server using an XHR or [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest). 
+This allows us to communicate with the server without changing pages then do some action based on the data we get back.
+Let's create a function we can put in our event handlers.
 ```js
+var xhr = function (method, path, data, callback) {
+    // Rest of the code will go in here
+};
+```
 
- var xhr = function (method, path, data, callback) {
-        
-    // First we create a new instance of XHR.
+First we create a new instance of XHR.
+```js
     var request = new XMLHttpRequest();
-    
-    // We'll use open to initialize the request with some info.
-    // The method (GET, POST), the path (/users/id), async (should always be true)
+```
+
+Next we'll use `open( method, path, async)` to initialize the request.
+ - `method` just a string of an HTTP method to use, such as 'GET', 'POST', 'PUT', 'DELETE'. (This will match the Verb on the API table up top.)
+ - `path` simply a string of the full path to send the request to.  
+ - `async` a boolean flag that dictates whether the script should run asynchronously.
+
+**ProTip™:** `async` should always be `true` to prevent blocking. Stopping JavaScript execution especially hurts time sensitive things like rendering or event listening/handling. 
+```js
     request.open(method, path, true);
-    
-    // TODO: Not sure if we have to send it as json or just form data?
-    // if (method === 'POST') {
-    //     request.setRequestHeader('Content-Type', 'application/json');
-    // }
+```
 
 
-    // XHR only has one event and that's onreadystatechange (all lowercase). 
-    // Here we only care for the last state, 4, which triggers the request operation is complete.
-    // We'll make sure we got a good server respose, then send the data back though a callback.
+XHR only has one event we care about and that's [onreadystatechange](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/onreadystatechange) (all lowercase). 
+Here we're looking for the last state `4` which is triggered when the request operation is complete.
+We'll also check to make sure we got a good server respose, then send the data back though a callback.
+```js
     request.onreadystatechange = function () {
         
         // ignore anything that isn't the last state
@@ -344,12 +350,21 @@ This allows us to communicate with the server without changing pages. Let's make
         callback(null, request.responseText);
         
     };
-    
-    // Lastly just close and send the request with our data.
-    request.send(data);
-    
-};
+```
 
+
+Lastly just close and send the request with our data using the `send` function.
+```js
+    request.send(data);
+```
+
+Now we're ready to use it!
+```js
+xhr('GET', '/forms', null, function (err, data) {
+    if (err) throw err;
+    console.log(data);
+    
+});
 ```
 
 ## Handle request
