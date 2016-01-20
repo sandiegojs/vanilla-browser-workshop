@@ -22,7 +22,7 @@ Prior to your arrival the following should be installed on your system:
 
 ## Goal: Effectively use vanilla JavaScript in the browser!
 
-Modern web developement workflows often rely on libraries like jQuery.  But using libraries can add a lot of unneeded bloat to your project. This workshop will help you dig a little deeper into JavaScript and how to use the available browser APIs without using the $.
+Modern web development workflows often rely on libraries like jQuery. But using libraries can add a lot of unneeded bloat to your project. This workshop will help you dig a little deeper into JavaScript and how to use the available browser APIs without using the $.
 
 This workshop will feature:
 
@@ -41,9 +41,9 @@ For this workshop, we are going to build out a business card creator. There is a
 
 Workshops are fun and can be a fast way to learn while building something potentially reusable. There will come a time, however, when you'll want to reference the API and see if there are other methods or functionality that you didn't know existed.
 
-A really good open-source resource that also provides great offline functionality for you future digital nomads is [DevDocs.io][devdocs]. You can select the different APIs you want to be immediately searchable and they cover everything from the browser, to node, to rails, to elixer, and even more you never even knew about!
+A really good open-source resource that also provides great offline functionality for you future digital nomads is [DevDocs.io][devdocs]. You can select the different APIs you want to be immediately searchable and they cover everything from the browser, to node, to rails, to elixir, and even more you never even knew about!
 
-For this workshop, it maybe useful to reference the sections that will align with this workshop
+For this workshop, it may be useful to reference the sections that will align with this workshop:
 
 * [DOM API][dom]
 * [Browser Event API][events]
@@ -51,7 +51,7 @@ For this workshop, it maybe useful to reference the sections that will align wit
 * [XHR Requests][xhr]
 * [Testing with Mocha][mocha]
 
-Another good resource for learning about the available APIs and even the internals of how a browser parses, executes and draws a page, is [Mozilla Developer Network][mdn]
+Another good resource for learning about the available APIs and even the internals of how a browser parses, executes, and draws a page, is [Mozilla Developer Network][mdn].
 
 **Have any other great resources you've used? We would love to hear about them and share them with the other attendees!**
 
@@ -152,11 +152,11 @@ Cool! We have a very simple form with some basic styling already good to go for 
 
 ## The HTML
 
-We should know what kind of document we are working with before we create anything. Since the boilerplate was setup for us, we'll just need to open up the `public/index.html` file and take a look.
+We should know what kind of document we are working with before we move forward. Since the boilerplate was setup for us, we'll just need to open up the `public/index.html` file and take a look.
 
 You should see that the styles are included in the header from `public/index.css` and the script for our JavaScript is included at the top of the body from `public/index.js`.
 
-**ProTip™:** When the browser encounters a `<script>` tag, it is blocking - meaning the browser will immediately download and execute it. To load the `<script>` asynchronousy and not block the browser's parsing of the document, set `async=true` on the tag.
+**ProTip™:** When the browser encounters a `<script>` tag, it is blocking - meaning the browser will immediately download and execute it. To load the `<script>` asynchronously and not block the browser's parsing of the document, set `async='true'` on the tag.
 
 Within the `public/index.html` you should see a basic form with labels and inputs. Familiarize yourself with the different fields.
 
@@ -166,7 +166,7 @@ Are you ready to get coding, yet?
 
 Have you ever used a form where you didn't realize you missed a required field until after clicking the submit button, waiting for the page to send data off to the server, waiting for the page to reload, and then finally to get the perplexing red error message at the top? What a pain!
 
-Let's save our users the hastle and let them know right away that they are required to fill in certain fields _before_ sending anything off to the server.
+Let's save our users the hassle and let them know right away that they are required to fill in certain fields _before_ sending anything off to the server.
 
 There are a few different ways to do this, and we will elaborate on this later, but the most basic way to get going with form validation is using the built-in HTML field validations.
 
@@ -192,7 +192,7 @@ Neato! This is all taken care of for you by the browser out-of-the-box!
 
 ### Validations
 
-Some `<input>` types have intrinsic constraints, such as `type=email`. If you look at the `public/index.html` you will see that our email field is currently setup as a `type=text`. Go ahead and change it.
+Some `<input>` types have intrinsic constraints, such as `type='email'`. If you look at the `public/index.html` you will see that our email field is currently setup as a `type='text'`. Go ahead and change it.
 
 Once you have, we can test it out. Head over to the browser, type in a `Name` value (so that we don't get the required error) and type in a phoney string that doesn't look like an email address. Once you hit submit, you should see a nice message come up and tell you that your input doesn't look like an email.
 
@@ -227,7 +227,7 @@ There are many functions we can use to get a reference to a DOM node. Overtime t
 - [getElementsByName](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByName)
 - [getElementsByTagName](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByTagName)
 
-We are going to focus on `querySelector`. This function behaves similiar to jQuery in that it allows you to specify a [css selector][css-selector] that will be used to find the first matching node. One of the nice feature of this function is that it is available both on the `document` as well as `element`. These mean you can take an existing element reference and query it for sub elements.
+For now, we are going to focus on `querySelector`. This function behaves similar to jQuery in that it allows you to specify a [css selector][css-selector] that will be used to find the first matching node. One of the nice feature of this function is that it is available both on the `document` as well as `element`. This means you can search for an element in the entire document or narrow your search to the sub elements of an existing element.
 
 Lets begin by selecting the input with a name attribute of `name`.
 
@@ -237,15 +237,15 @@ This returns us an [`HTMLInputElement`][html-input] which has a `value` property
 
 	inputName.value = 'My new value!'
 
-You should see the value you set refelected in the forms input.
+You should see the value you set reflected in the form's input.
 
 Whenever dealing with a DOM node it's important to understand what type of element you have and what are it's parents. That will determine the properties and functions available to you.
 
 ## Event Handling
 
-When users interact with the webpage the DOM publishes these interactions as events, for example; `click`, `scroll`, `keypress` and [more](https://developer.mozilla.org/en-US/docs/Web/Events).
+When users interact with the web page the DOM publishes these interactions as events, for example; `click`, `scroll`, `keypress`, and [more][mdn-events].
 
-By selecting an element from the DOM we can [`addEventListener`][event-listener] which will execute a callback function we provide any time that event occurs. Lets start by listening for a `click` on the `document` and trigger an `alert` whenever that event occurs.
+After selecting an element from the DOM, we can call it's [`addEventListener`][event-listener] method which will execute a callback function we provide any time that event occurs. Lets start by listening for a `click` on the `document` and trigger an `alert` whenever that event occurs.
 
 ```
 function handler() {
@@ -263,12 +263,12 @@ document.removeEventListener('click', handler)
 
 It's important to note that in order for us to be able to remove an event listener we need to name our functions so we can specify what to remove for that event.
 
-Using this simple API we can trigger complex logic contained with in provided functions.
+Using this simple API we can trigger the complex logic we will be writing shortly.
 
 
 ### Multiple Event Listeners
 
-One of the great things about event listeners is that we can attach multiple listeners per event, for example.
+One of the great things about event listeners is that we can attach multiple listeners per event. For example:
 
 ```
 function handlerOne() {
@@ -291,7 +291,7 @@ When we attach callback functions to events these functions are passed an event 
 
 ```
 function logEvent(evt) {
-  console.log(evt);
+  console.log(evt)
 }
 
 document.addEventListener('click', logEvent)
@@ -303,9 +303,47 @@ If you inspect this event in the console you will see there are quite a few prop
 
 `currentTarget` is the element who handled the event during the event capture (a.k.a bubbling) phase.
 
-Although important we won't dive into the distinct between these two just yet. For our purposes we are going to use the `currentTarget` event to always get a reference to the element who has the event listener listening for the event.
+Although important, we won't dive into the distinction between these two just yet. For our purposes we are going to use the `currentTarget` event to always get a reference to the element who has the event listener listening for the event.
 
 ## Add submit event
+
+Now that we've covered the basics of getting a DOM element and hooking into it's events, let's add a submit event 
+handler to the form. Later, we'll use this handler to kick off a request to the backend.
+
+To start create a new file called `main.js` in the app directory.
+
+Our first step in this new file is to get a reference to the form element. Create a variable named `form`, and assign 
+the form DOM element on the page to it.
+
+`var form = document.querySelector('form')`
+
+On the next line create a `submitHandler` function. We will need to have the event passed into the handler available to 
+us so add the parameter `evt` to the function declaration.
+
+`function submitHandler(evt) {}`
+
+We will be using the `preventDefault` method on the event object. This handy method will stop the form from submitting 
+to the backend so that we can submit this information using AJAX. Let's also throw in an `alert` so that we can see some 
+feedback from the submit handler. Otherwise, when we click on the submit button nothing will happen which can be 
+confusing. Add the two new commands to the submit handler declaration like below. 
+
+```
+function submitHandler (evt) {
+    evt.preventDefault()
+    alert('submit!')
+}
+```
+
+The final step is to hook the form element we acquired above to the submit handler just after it. Use the 
+`addEventListener` method on the form variable and pass in the event we want to listen for (submit) as well as the 
+custom handler we wrote.
+
+`form.addEventListener('submit', submitHandler)`
+
+Now refresh your page and you should be able to submit the form after filling out the two required fields, but instead 
+of the page refreshing and losing everything you've entered the page will show you an alert and you won't lose any of 
+the information you typed. Cool!
+
 
 ## Build XHR and submit
 
@@ -326,30 +364,31 @@ Although important we won't dive into the distinct between these two just yet. F
 
 ## Heroku to Publish
 
-[Heroku][heroku] is a web hosting platform that allows developers to go from code to running apps in minutes.  It has a free tier, as well as a super fast workflow. To try it out create a free account on Heroku, and then use the button below to automatically deploy this app directly from GitHub to a running Heroku instance.
+[Heroku][heroku] is a web hosting platform that allows developers to go from code to running apps in minutes. It has a free tier, as well as a super fast workflow. To try it out create a free account on Heroku, and then use the button below to automatically deploy this app directly from GitHub to a running Heroku instance.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/sandiegojs/vanilla-browser-workshop)
 
 Read [Getting Started with Node.js on Heroku][node-heroku] for more information.
 
-[localhost]: http://localhost:3000
-[git-scm]: http://git-scm.com/downloads
-[npm-g-without-sudo]: https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
-[node-install]: https://nodejs.org/download/
-[san diego js]: http://sandiegojs.org/
-[mdn-validations]: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation
-[gulp]: http://gulpjs.com/
-[heroku]: http://heroku.com
-[heroku-toolbelt]: https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
-[heroku-node]: https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction
+[cookies]: https://devdocs.io/dom/document/cookie
+[css-selector]: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_Started/Selectors
 [devdocs]: http://devdocs.io
 [dom]: https://devdocs.io/dom/
-[events]: https://devdocs.io/dom_events
-[cookies]: https://devdocs.io/dom/document/cookie
-[xhr]: https://devdocs.io/dom/xmlhttprequest
-[mocha]: https://devdocs.io/mocha/
-[mdn]: https://developer.mozilla.org/en-US/
-[css-selector]: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_Started/Selectors
-[html-input]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement
 [event-listener]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+[events]: https://devdocs.io/dom_events
+[git-scm]: http://git-scm.com/downloads
+[gulp]: http://gulpjs.com/
+[heroku]: http://heroku.com
+[heroku-node]: https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction
+[heroku-toolbelt]: https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
+[html-input]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement
+[localhost]: http://localhost:3000
+[mdn]: https://developer.mozilla.org/en-US/
+[mdn-events]: https://developer.mozilla.org/en-US/docs/Web/Events
+[mdn-validations]: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation
+[mocha]: https://devdocs.io/mocha/
 [mouse-event]: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
+[node-install]: https://nodejs.org/download/
+[npm-g-without-sudo]: https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
+[san diego js]: http://sandiegojs.org/
+[xhr]: https://devdocs.io/dom/xmlhttprequest
