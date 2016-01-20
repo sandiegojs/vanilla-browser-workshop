@@ -347,6 +347,64 @@ the information you typed. Cool!
 
 ## Build XHR and submit
 
+Now that we have our data we need to send it to the server using an XHR or [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest). 
+This allows us to communicate with the server without changing pages then do some action based on the data we get back.
+Let's create a function we can put in our event handlers.
+```js
+var xhr = function (method, path, data, callback) {
+    // Rest of the code will go in here
+};
+```
+
+First we create a new instance of XHR.
+```js
+    var request = new XMLHttpRequest();
+```
+
+Next we'll use `open( method, path, async)` to initialize the request.
+ - `method` just a string of an HTTP method to use, such as 'GET', 'POST', 'PUT', 'DELETE'. (This will match the Verb on the API table up top.)
+ - `path` simply a string of the full path to send the request to.  
+ - `async` a boolean flag that dictates whether the script should run asynchronously.
+
+**ProTip™:** `async` should always be `true` to prevent blocking. Stopping JavaScript execution especially hurts time sensitive things like rendering or event listening/handling. 
+```js
+    request.open(method, path, true);
+```
+
+
+XHR only has one event we care about and that's [onreadystatechange](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/onreadystatechange) (all lowercase). 
+Here we're looking for the last state `4` which is triggered when the request operation is complete.
+We'll also check to make sure we got a good server respose, then send the data back though a callback.
+```js
+    request.onreadystatechange = function () {
+        
+        // ignore anything that isn't the last state
+        if (request.readyState !== 4) return;
+        
+        // if we didn't get a 200 OK status send back an error
+        if (request.readyState === 4 && request.status !== 200) callback(new Error('XHR Failed: ' + path), null);
+        
+        // return our server data
+        callback(null, request.responseText);
+        
+    };
+```
+
+
+Lastly just close and send the request with our data using the `send` function.
+```js
+    request.send(data);
+```
+
+Now we're ready to use it!
+```js
+xhr('GET', '/forms', null, function (err, data) {
+    if (err) throw err;
+    console.log(data);
+    
+});
+```
+
 ## Handle request
 
 ## Dom creation to rendered returned info
