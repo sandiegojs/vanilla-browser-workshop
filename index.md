@@ -1,6 +1,6 @@
-# Vanilla Javascript in the Browser Workshop
+# Vanilla JavaScript in the Browser Workshop
 
-Welcome to Vanilla Javascript in the Browser workshop hosted by [San Diego JS][san diego js].
+Welcome to Vanilla JavaScript in the Browser workshop hosted by [San Diego JS][san diego js].
 
 ## Pre-event Setup Instructions
 
@@ -202,7 +202,7 @@ If you want to learn more about validations that are available for inputs, [MDN 
 
 ## DOM
 
-The Document Object Model(DOM) is how we are able to interact with our page via JavaScript.
+The Document Object Model(DOM) is how we are able to interact with our page via JavaScript. The DOM is a representation of what is on the page, including the elements and styles.
 
 > The Document Object Model (DOM) is a programming interface for HTML, XML and SVG documents. It provides a structured representation of the document (a tree) and it defines a way that the structure can be accessed from programs so that they can change the document structure, style and content. The DOM provides a representation of the document as a structured group of nodes and objects that have properties and methods. Nodes can also have event handlers attached to them, and once that event is triggered the event handlers get executed. Essentially, it connects web pages to scripts or programming languages. -[MDN](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
 
@@ -216,9 +216,9 @@ To visualize this all you need to do is open your web inspector and look at the 
 
 ## Dom selection
 
-In order to interact with the DOM within JavaScript, the first thing you will need to understand is element selection. By selecting an element (DOM node) we get a reference to that element which allows us to take actions on it.
+In order to interact with the DOM within JavaScript, the first thing you will need to understand is element selection. If you're familiar with a library such as [jQuery][jquery] or [Zepto][zepto] than you'll be used to doing this by way of the `$()` selector. By selecting an element (DOM node) we get a reference to that element which allows us to take actions on it.
 
-There are many functions we can use to get a reference to a DOM node. Overtime these functions have been introduced to solve different needs. As such, the browser support for them can vary. You should always research browser compatability to ensure they will work for your user base.
+There are several functions we can use to get a reference to a DOM node. Overtime these functions have been introduced to solve different needs. As such, the browser support for them can vary. You should always research browser compatability to ensure they will work for your user base.
 
 - [querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)
 - [querySelectorAll](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)
@@ -229,13 +229,17 @@ There are many functions we can use to get a reference to a DOM node. Overtime t
 
 For now, we are going to focus on `querySelector`. This function behaves similar to jQuery in that it allows you to specify a [css selector][css-selector] that will be used to find the first matching node. One of the nice feature of this function is that it is available both on the `document` as well as `element`. This means you can search for an element in the entire document or narrow your search to the sub elements of an existing element.
 
-Lets begin by selecting the input with a name attribute of `name`.
+For now, let's just open up the dev console and mess around. We can begin by selecting the input with a name attribute of `name`.
 
-    var inputName = document.querySelector('input[name="name"]')
+```js
+var inputName = document.querySelector('input[name="name"]')
+```
 
 This returns us an [`HTMLInputElement`][html-input] which has a `value` property available. Go ahead and set the value property to see an example of how you can change the DOM.
 
-	inputName.value = 'My new value!'
+```js
+inputName.value = 'My new value!'
+```
 
 You should see the value you set reflected in the form's input.
 
@@ -247,7 +251,7 @@ When users interact with the web page the DOM publishes these interactions as ev
 
 After selecting an element from the DOM, we can call it's [`addEventListener`][event-listener] method which will execute a callback function we provide any time that event occurs. Lets start by listening for a `click` on the `document` and trigger an `alert` whenever that event occurs.
 
-```
+```js
 function handler() {
   alert('user clicked on the page')
 }
@@ -257,7 +261,7 @@ document.addEventListener('click', handler)
 
 Now if you click on the page you should receive an alert with your message. Alerting users every time they click the page can get annoying so lets remove that event listener.
 
-```
+```js
 document.removeEventListener('click', handler)
 ```
 
@@ -287,7 +291,7 @@ Now both of these functions will be executed whenever someone clicks the page.
 
 ### Event Listener Parameter
 
-When we attach callback functions to events these functions are passed an event parameter. The type of event given will change depending on the type input device which triggered it. Since we are listening for a `click` event we will receive a [`MouseEvent`][mouse-event].
+When we attach callback functions to events these functions are passed as an event argument. The type of event given will change depending on the type input device which triggered it. Since we are listening for a `click` event we will receive a [`MouseEvent`][mouse-event].
 
 ```
 function logEvent(evt) {
@@ -307,47 +311,44 @@ Although important, we won't dive into the distinction between these two just ye
 
 ## Add submit event
 
-Now that we've covered the basics of getting a DOM element and hooking into it's events, let's add a submit event 
-handler to the form. Later, we'll use this handler to kick off a request to the backend.
+Now that we've covered the basics of getting a DOM element and hooking into it's events, let's add a submit event handler to the form. Later, we'll use this handler to kick off a request to the backend.
 
 To start create a new file called `main.js` in the app directory.
 
-Our first step in this new file is to get a reference to the form element. Create a variable named `form`, and assign 
-the form DOM element on the page to it.
+Our first step in this new file is to get a reference to the form element. Create a variable named `form`, and assign the form DOM element on the page to it.
 
-`var form = document.querySelector('form')`
-
-On the next line create a `submitHandler` function. We will need to have the event passed into the handler available to 
-us so add the parameter `evt` to the function declaration.
-
-`function submitHandler(evt) {}`
-
-We will be using the `preventDefault` method on the event object. This handy method will stop the form from submitting 
-to the backend so that we can submit this information using AJAX. Let's also throw in an `alert` so that we can see some 
-feedback from the submit handler. Otherwise, when we click on the submit button nothing will happen which can be 
-confusing. Add the two new commands to the submit handler declaration like below. 
-
+```js
+var form = document.querySelector('form')
 ```
-function submitHandler (evt) {
-    evt.preventDefault()
-    alert('submit!')
+
+On the next line create a `submitHandler` function. We will need to have the event passed into the handler available to us so add the parameter `evt` to the function declaration.
+
+```js
+function submitHandler(evt) {}
+```
+
+We will be using the `preventDefault` method on the event object. This handy method will stop the form from submitting to the backend so that we can submit this information using AJAX.
+
+Let's also throw in an `alert` so that we can see some feedback from the submit handler. Otherwise, when we click on the submit button nothing will happen which can be confusing. Add the two new commands to the submit handler declaration like below.
+
+```js
+function submitHandler(evt) {
+  evt.preventDefault()
+  alert('submit!')
 }
 ```
 
-The final step is to hook the form element we acquired above to the submit handler just after it. Use the 
-`addEventListener` method on the form variable and pass in the event we want to listen for (submit) as well as the 
-custom handler we wrote.
+In order to hook this handler up to our form element, we will need to use the `addEventListener` method that exists on the form node. Pass in the event we want to listen for (submit) as well as the custom handler we just wrote.
 
 `form.addEventListener('submit', submitHandler)`
 
-Now refresh your page and you should be able to submit the form after filling out the two required fields, but instead 
-of the page refreshing and losing everything you've entered the page will show you an alert and you won't lose any of 
-the information you typed. Cool!
+Now if you refresh the page you should be able to submit the form after filling out the two required fields, but instead of the page refreshing and losing everything you've entered the page will show you an alert and you won't lose any of the information you typed.
 
+Our event handler is now working!
 
 ## Build XHR and submit
 
-Now that we have our data we need to send it to the server using an XHR or [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest). 
+Now that we have our data we need to send it to the server using an XHR or [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest).
 This allows us to communicate with the server without changing pages then do some action based on the data we get back.
 Let's create a function we can put in our event handlers.
 ```js
@@ -363,30 +364,30 @@ First we create a new instance of XHR.
 
 Next we'll use `open( method, path, async)` to initialize the request.
  - `method` just a string of an HTTP method to use, such as 'GET', 'POST', 'PUT', 'DELETE'. (This will match the Verb on the API table up top.)
- - `path` simply a string of the full path to send the request to.  
+ - `path` simply a string of the full path to send the request to.
  - `async` a boolean flag that dictates whether the script should run asynchronously.
 
-**ProTip™:** `async` should always be `true` to prevent blocking. Stopping JavaScript execution especially hurts time sensitive things like rendering or event listening/handling. 
+**ProTip™:** `async` should always be `true` to prevent blocking. Stopping JavaScript execution especially hurts time sensitive things like rendering or event listening/handling.
 ```js
     request.open(method, path, true);
 ```
 
 
-XHR only has one event we care about and that's [onreadystatechange](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/onreadystatechange) (all lowercase). 
+XHR only has one event we care about and that's [onreadystatechange](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/onreadystatechange) (all lowercase).
 Here we're looking for the last state `4` which is triggered when the request operation is complete.
 We'll also check to make sure we got a good server respose, then send the data back though a callback.
 ```js
     request.onreadystatechange = function () {
-        
+
         // ignore anything that isn't the last state
         if (request.readyState !== 4) return;
-        
+
         // if we didn't get a 200 OK status send back an error
         if (request.readyState === 4 && request.status !== 200) callback(new Error('XHR Failed: ' + path), null);
-        
+
         // return our server data
         callback(null, request.responseText);
-        
+
     };
 ```
 
@@ -401,7 +402,7 @@ Now we're ready to use it!
 xhr('GET', '/forms', null, function (err, data) {
     if (err) throw err;
     console.log(data);
-    
+
 });
 ```
 
@@ -736,3 +737,5 @@ Read [Getting Started with Node.js on Heroku][node-heroku] for more information.
 [npm-g-without-sudo]: https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
 [san diego js]: http://sandiegojs.org/
 [xhr]: https://devdocs.io/dom/xmlhttprequest
+[zepto]: http://zeptojs.com/
+[jquery]: https://jquery.com/
