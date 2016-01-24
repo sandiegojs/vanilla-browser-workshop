@@ -1,3 +1,29 @@
+.icon-minus {
+  background-color: #000;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.icon-minus:after {
+  background-color: #fff;
+  width: 8px;
+  height: 2px;
+  border-radius: 1px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  position: absolute;
+  top: 7px;
+  left: 3.5px;
+  z-index: 4;
+  content: "";
+}
+
 .icon-plus {
   background-color: #000;
   border-radius: 8px;
