@@ -252,7 +252,7 @@ When users interact with the web page the DOM publishes these interactions as ev
 After selecting an element from the DOM, we can call it's [`addEventListener`][event-listener] method which will execute a callback function we provide any time that event occurs. Lets start by listening for a `click` on the `document` and trigger an `alert` whenever that event occurs.
 
 ```js
-function handler() {
+var handler = function() {
   alert('user clicked on the page')
 }
 
@@ -275,11 +275,11 @@ Using this simple API we can trigger the complex logic we will be writing shortl
 One of the great things about event listeners is that we can attach multiple listeners per event. For example:
 
 ```js
-function handlerOne() {
+var handlerOne = function() {
   // Do some logic
 }
 
-function handlerTwo() {
+var handlerTwo = function() {
   // Do some logic
 }
 
@@ -294,7 +294,7 @@ Now both of these functions will be executed whenever someone clicks the page.
 When we attach callback functions to events these functions are passed as an event argument. The type of event given will change depending on the type input device which triggered it. Since we are listening for a `click` event we will receive a [`MouseEvent`][mouse-event].
 
 ```js
-function logEvent(evt) {
+var logEvent = function(evt) {
   console.log(evt)
 }
 
@@ -324,7 +324,7 @@ var form = document.querySelector('form')
 On the next line create a `submitHandler` function. We will need to have the event passed into the handler available to us so add the parameter `evt` to the function declaration.
 
 ```js
-function submitHandler(evt) {}
+var submitHandler = function(evt) {}
 ```
 
 We will be using the `preventDefault` method on the event object. This handy method will stop the form from submitting to the backend so that we can submit this information using AJAX.
@@ -332,7 +332,7 @@ We will be using the `preventDefault` method on the event object. This handy met
 Let's also throw in an `alert` so that we can see some feedback from the submit handler. Otherwise, when we click on the submit button nothing will happen which can be confusing. Add the two new commands to the submit handler declaration like below.
 
 ```js
-function submitHandler(evt) {
+var submitHandler = function(evt) {
   evt.preventDefault()
   alert('submit!')
 }
@@ -346,22 +346,143 @@ Now if you refresh the page you should be able to submit the form after filling 
 
 Our event handler is now working!
 
-// TODO GET THE DATA YO!
+## Serialize the form data
+
+Before we can begin to asseble the pieces for talking to our server, we will need to make sure that we can capture the data from our form in a format that our API endpoint can digest. The API for this workshop is built with [`rails-api`][rails-api] which will be expecting a JSON API object on the request.
+
+We need to take the form data and convert it to an object that looks like this
+
+```json
+{
+  "form": {
+    "name": "",
+    "email": "",
+    "city": "",
+    "state": "",
+    "github": "",
+    "twitter": "",
+    "bio": "",
+    "skills_attributes": []
+  }
+}
+```
+
+If we were using something like jQuery we may use the `.serializeArray()` method. Let's write our own `serializeArray` method.
+
+```js
+var serializeArray = function(selector) {}
+```
+
+We want to be able to pass in our selector for the form to this method and get the JSON object back. First, let's use `document.querySelector` again to grab the form.
+
+```js
+var serializeArray = function(selector) {
+  var form = document.querySelector(selector)
+}
+```
+
+**ProTip™:**  In our example, we know we are passing in a form selector but if you wanted to use this method in a different scenario, you might want to check that the element we have selected is actually a form by using `form.tagName` to check the element's tag name.
+
+Now we need to grab all the inputs from inside the form element. Remember the `querySelectorAll` method mentioned above? While `querySelector` returns a single Node in the DOM, `querySelectorAll` will return a [`NodeList`][node-list].
+
+The unusual thing about this is that `NodeList` is not a JavaScript `Array` and so we cannot use methods like `map` or `forEach` to iterate over the items returned. We could do some fancy work and add these methods to the prototype for `NodeList`, but to keep things simple we will just use a basic `for` loop to iterate over them.
+
+```js
+var serializeArray = function(selector) {
+  var form = document.querySelector(selector)
+  var formInputs = form.querySelectorAll('input,textarea')
+
+  for (var i = 0; i < formInputs.length; i++) {
+    var item = formInputs[i]
+  }
+}
+```
+
+Now that we can iterate over them we will need to store the `name` and `value` of each item onto a JSON object as the `key`,`value` pair. When we are accessing the `Node` directly, we can easily call `node.name` or `node.value` to access these attributes.
+
+We can't test our method unless we call our `serializeArray` method from somewhere, so let's add the call into our `submitHandler` method.
+
+```js
+var submitHandler = function(evt) {
+  evt.preventDefault()
+  var data = serializeArray('form')
+}
+```
+
+Ok, now let's build our final `data` JSON object. Let's also log it to the console so that we can inspect it make sure it matches our expected output that we defined above.
+
+```js
+var serializeArray = function(selector) {
+  var form = document.querySelector(selector)
+  var formInputs = form.querySelectorAll('input,textarea')
+
+  // Empty object for us to set key values of inputs
+  var data = {}
+
+  for (var i = 0; i < formInputs.length; i++) {
+    var item = formInputs[i]
+    data[item.name] = item.value
+  }
+
+  // Log out our final object so we can inspect it
+  console.log(data)
+}
+```
+
+When you reload the page and submit the form again, you should see something similar to this outputted in the console.
+
+![build the form JSON](https://s3.amazonaws.com/f.cl.ly/items/3t1c0A0r3s1g1X3x0F2h/H4S7wE1TeY.gif?v=8d848baa)
+
+Well that looks _nearly_ correct. Can you spot the problems?
+
+Firstly, we're capturing the submit button. There are a couple ways to avoid this.
+
+We could change the submit button from an `input` to a `div` and change our handler from the `form` `submit` event to the `div` `onclick` event. If we were to do this, we would lose the native validations, so let's nix this idea.
+
+We could instead just change our `querySelectorAll(...)` selector string to ignore the `type=submit` input. That seems simple enough, so let's add that in.
+
+```js
+var serializeArray = function(selector) {
+  var form = document.querySelector(selector)
+  var formInputs = form.querySelectorAll('input:not([type=submit]),textarea')
+
+  // Empty object for us to set key values of inputs
+  var data = {}
+
+  for (var i = 0; i < formInputs.length; i++) {
+    var item = formInputs[i]
+    data[item.name] = item.value
+  }
+
+  // Log out our final object so we can inspect it
+  console.log(data)
+}
+```
+
+Ok, let's try this again!
+
+![build the form JSON part 2](https://s3.amazonaws.com/f.cl.ly/items/1s1h3l1Q1i0p2w2m420h/Y4DiNdRhjA.gif?v=42961ab1)
+
+Something is still off. Did you spot it?
+
+We need our `skills_attributes` key to have an array value.
+
+// TODO Heather left off here
 
 ## Build XHR and submit
 
 Now that we have our data we need to send it to the server using an XHR or [`XMLHttpRequest`][xhr-mdn]. This allows us to communicate with the server without changing pages then do some action based on the data we get back. We are going to create a function that we can put in our event handlers that will do this.
 
 ```js
-var xhr = function(method, path, data, callback) {
-  // The following code will go in here
-}
+var xhr = function(method, path, data, callback) {}
 ```
 
 First we create a new instance of XHR.
 
 ```js
-var request = new XMLHttpRequest()
+var xhr = function(method, path, data, callback) {
+  var request = new XMLHttpRequest()
+}
 ```
 
 Next we'll use `open(method, path, async)` to initialize the request.
@@ -373,7 +494,10 @@ Next we'll use `open(method, path, async)` to initialize the request.
 **ProTip™:** `async` should always be `true` to prevent blocking. Stopping JavaScript execution especially hurts time sensitive things like rendering or event listening/handling.
 
 ```js
-request.open(method, path, true)
+var xhr = function(method, path, data, callback) {
+  var request = new XMLHttpRequest()
+  request.open(method, path, true)
+}
 ```
 
 XHR only has one event we care to listen to and that's [onreadystatechange][onreadystatechange].
@@ -383,42 +507,61 @@ The ready state of the XHR will change a few times, but we are looking for the l
 We'll also check to make sure we got a good server respose, then send the data back though a callback.
 
 ```js
-request.onreadystatechange = function() {
-  // ignore anything that isn't the last state
-  if (request.readyState !== 4) { return }
+var xhr = function(method, path, data, callback) {
+  var request = new XMLHttpRequest()
+  request.open(method, path, true)
+  request.onreadystatechange = function() {
+    // ignore anything that isn't the last state
+    if (request.readyState !== 4) { return }
 
-  // if we didn't get a 200 OK status send back an error
-  if (request.readyState === 4 && request.status !== 200) {
-    callback(new Error('XHR Failed: ' + path), null)
+    // if we didn't get a 200 OK status send back an error
+    if (request.readyState === 4 && request.status !== 200) {
+      callback(new Error('XHR Failed: ' + path), null)
+    }
+
+    // return our server data
+    callback(null, request.responseText)
   }
-
-  // return our server data
-  callback(null, request.responseText)
 }
 ```
 
 
 Lastly just close and send the request with our data using the `send` function.
 ```js
-request.send(data);
+var xhr = function(method, path, data, callback) {
+  var request = new XMLHttpRequest()
+  request.open(method, path, true)
+  request.onreadystatechange = function() {
+    // ignore anything that isn't the last state
+    if (request.readyState !== 4) { return }
+
+    // if we didn't get a 200 OK status send back an error
+    if (request.readyState === 4 && request.status !== 200) {
+      callback(new Error('XHR Failed: ' + path), null)
+    }
+
+    // return our server data
+    callback(null, request.responseText)
+  }
+  request.send(data)
+}
 ```
 
 Now we're ready to use it!
 
-We can put now use the `xhr` method we wrote inside of our `submitHandler`.
+We can put now use the `xhr` method we wrote inside of our `submitHandler`. We can call it with the 'POST' method and pass it the form data.
 
 ```js
 var apiURL = '//sandiegojs-vanilla-workshop.herokuapp.com'
 
 function submitHandler(evt) {
   var path = apiURL + '/forms'
-  xhr('GET', path, null, function(err, data) {
+  xhr('POST', path, null, function(err, data) {
     if (err) { throw err }
     console.log(data)
   })
 }
 ```
-
 
 ## Handle request
 
@@ -484,10 +627,10 @@ The complete event handler should look like this:
 var email = document.querySelector('input[name="email"]');
 
 // Check for valid email while the user types
-email.addEventListener('keyup', function(event){
+email.addEventListener('keyup', function(event) {
   // see https://developer.mozilla.org/en-US/docs/Web/API/ValidityState for
   // other validity states
-  if (email.validity.typeMismatch){
+  if (email.validity.typeMismatch) {
     email.setCustomValidity('Oops, try a real email address.');
   } else {
     email.setCustomValidity('');
@@ -522,7 +665,7 @@ form.noValidate = true;
 
 form.addEventListener('submit', validationForm, false);
 
-function validateForm(event){
+function validateForm(event) {
 
 }
 ```
@@ -563,7 +706,7 @@ Every form has an elements array. You can use that loop through the fields.
 ```
 var form = event.target;
 var f;
-for (f = 0; f < form.elements.length; f++){
+for (f = 0; f < form.elements.length; f++) {
 
 }
 
@@ -576,7 +719,7 @@ if (!form.checkValidity()) {
 0. Within the loop, get a reference to the current field. `validateForm` should now look like:
 
 ```
-function validateForm(event){
+function validateForm(event) {
   var form = event.target;
   var f;
   var field;
@@ -588,7 +731,7 @@ function validateForm(event){
 
   }
 
-  if (!form.checkValidity()){
+  if (!form.checkValidity()) {
     // form is invalid
     event.preventDefault();
   }
@@ -605,7 +748,7 @@ You know you will have custom logic for validating the state field, so use a fun
 0. Like the form, fields have a `checkValidity` function. Use this function to determine the return value for the function. Here's how it should look:
 
 ```
-function isValid(field){
+function isValid(field) {
   return field.checkValidity();
 }
 ```
@@ -636,7 +779,7 @@ Now that you are looping through each field and checking its validity, you can u
 0. Now that you have a reference to the element, set its `innerHTML` to the field's `validationMessage`. The `validationMessage` is either the default message from the browser or a custom message you set. The finished function should loop like:
 
 ```
-function setError(field){
+function setError(field) {
   var error = field.nextElementSibling;
   if (error) error.innerHTML = field.validationMessage;
 }
@@ -647,7 +790,7 @@ function setError(field){
 0. Instead of `field.validationMessage`, set the `innerHTML` to `''`. The complete function is:
 
 ```
-function clearError(field){
+function clearError(field) {
   var error = field.nextElementSibling;
   if (error) error.innerHTML = '';
 }
@@ -681,7 +824,7 @@ You will add this logic to the top of the `isValid` function you created earlier
 0. If so, check if the state is in the list of valid states. Valid states include: CA, TX, NY.
 
 ```
-function isValid(field){
+function isValid(field) {
   // custom logic for state
   if (field.name === 'state') {
     var validStates = ['CA', 'TX', 'NY'];
@@ -756,3 +899,5 @@ Read [Getting Started with Node.js on Heroku][node-heroku] for more information.
 [xhr-mdn]: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
 [onreadystatechange]: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/onreadystatechange
 [sdjs-app]: //sandiegojs-vanilla-workshop.herokuapp.com
+[rails-api]: https://github.com/rails-api/rails-api
+[node-list]: https://developer.mozilla.org/en-US/docs/Web/API/NodeList
