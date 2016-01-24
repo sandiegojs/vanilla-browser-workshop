@@ -309,6 +309,17 @@ If you inspect this event in the console you will see there are quite a few prop
 
 Although important, we won't dive into the distinction between these two just yet. For our purposes we are going to use the `currentTarget` event to always get a reference to the element who has the event listener listening for the event.
 
+## Add skills (add more, delete)
+
+Now that we know how to add event listeners, let's add some additional functionality to our form. We have more than just a single skill to boast about, so we want to be able to add multiple skills.
+
+You probably noticed the nice `+` button next to the `skills` input. Right now it doesn't do anything. We need to add an `onclick` handler in order to bring it to life.
+
+```js
+var addSkillHandler = function(evt) {}
+```
+
+
 ## Add submit event
 
 Now that we've covered the basics of getting a DOM element and hooking into it's events, let's add a submit event handler to the form. Later, we'll use this handler to kick off a request to the backend.
@@ -466,8 +477,6 @@ Ok, let's try this again!
 Something is still off. Did you spot it?
 
 We need our `skills_attributes` key to have an array value.
-
-// TODO Heather left off here
 
 ## Build XHR and submit
 
@@ -855,8 +864,6 @@ function isValid(field) {
 Now when you try to submit without a state or an invalid state, you will get an error message just like with name and email.
 
 That's it for validation! You may now add "HTML5 constraint validation API" to your resume.
-
-## Add skills (add more, delete)
 
 ## Welcome text with cookies
 
