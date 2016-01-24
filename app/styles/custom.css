@@ -1,4 +1,14 @@
-.add-skill {
+.add-skill, .remove-skill {
   display: inline-block;
   height: 12px;
+}
+
+.add-skill:hover, .remove-skill:hover {
+  display: inline-block;
+  height: 12px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }

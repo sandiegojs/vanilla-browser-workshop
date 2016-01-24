@@ -309,15 +309,94 @@ If you inspect this event in the console you will see there are quite a few prop
 
 Although important, we won't dive into the distinction between these two just yet. For our purposes we are going to use the `currentTarget` event to always get a reference to the element who has the event listener listening for the event.
 
-## Add skills (add more, delete)
+## Add and remove skills
 
-Now that we know how to add event listeners, let's add some additional functionality to our form. We have more than just a single skill to boast about, so we want to be able to add multiple skills.
+Now that we know how to add event listeners, let's add some additional functionality to our form. We have more than just a single skill to boast about, so we want to be able to add multiple skills. We may also change our mind while we're filling out the form so we will have to be able to remove a skill, also.
 
-You probably noticed the nice `+` button next to the `skills` input. Right now it doesn't do anything. We need to add an `onclick` handler in order to bring it to life.
+### Adding a skill
+
+You probably noticed the nice `+` button next to the `skills` input. Right now it doesn't do anything. We need to add a `click` handler in order to bring it to life.
+
+In order to do that, we need to first select the `.add-skill` button which we will attach the handler to and then we need to also have a "blueprint" of the original div containing the skill elements so that we can copy it when we add another one.
 
 ```js
-var addSkillHandler = function(evt) {}
+var addSkillButton = document.querySelector('.add-skill')
+var skillTemplate = document.querySelector('.skills')
+
+var addSkillHandler = function(evt) {
+  alert('adding skill')
+}
+addSkillButton.addEventListener('click', addSkillHandler)
 ```
+
+If you give this a try in your browser now, you'll see the alert pop up when you click on the plus.
+
+What does "add skill" really mean? We want to duplicate the skill blueprint we have, `skillTemplate` and create another Node just like it. Then, we want to append it at the end of the list of skills.
+
+We can clone any DOM Node with the `cloneNode` method. The `cloneNode` method takes an optional boolean argument to determine whether it should be a deep or shallow clone. Since we want the entire `input-group` element and all of it's children Nodes, we are going to pass a `true` in.
+
+Unfortunately, there is no `appendAfter` method we can use like in jQuery, but there is an [`insertBefore`][insert-before] method. We can use `insertBefore` to append the new cloned Node just before the submit button.
+
+The `insertBefore` method uses a handle on the parent node to attach the new Node in the correct spot within the tree. We can use the `parentNode` accesor on any DOM Node to get it's parent, or, since we know the parent is the form we can just directly select it again.
+
+```js
+var addSkillButton = document.querySelector('.add-skill')
+var skillTemplate = document.querySelector('.skills')
+
+var addSkillHandler = function(evt) {
+  var submitNode = document.querySelector('.submit')
+  var parentNode = submitNode.parentNode
+  var newSkill = skillTemplate.cloneNode(true)
+  parentNode.insertBefore(newSkill, submitNode)
+}
+addSkillButton.addEventListener('click', addSkillHandler)
+```
+
+We just grew a branch on our DOM tree 🌳! Does it look right, though?
+
+![added skill](https://s3.amazonaws.com/f.cl.ly/items/113x3C3q1H133y3b3C1e/Screen%20Shot%202016-01-24%20at%2010.14.00%20AM.png?v=ad58e105)
+
+After we clone a new node, we need to change the plus sign to a minus sign on the previous one. If you look at the `public/index.html` you'll see that both the plus and minus icons already exist in the DOM, except that the minus is currently `hidden` with the class `hidden`.
+
+In jQuery, you can use the `.last()` method after selecting a group of elements to get the last one. Let's write a helper method that does just that for a given selector.
+
+```js
+var last = function(selector) {
+  var all = document.querySelectorAll(selector)
+  var length = all.length
+  return all[length - 1]
+}
+```
+
+Now let's update our `addSkillHandler` method to get a handle on the previous skill, update it to show the minus instead of the plus, and _then_ add the new skill to the end of the list.
+
+When we have a handle on the DOM Node as we will with the previous skill, we can get a list of the Node's classes by using the [`classList` accessor][class-list]. We can then use `.add()` and `.remove()` to add and remove classes from this Node.
+
+
+```js
+var addSkillButton = document.querySelector('.add-skill')
+var skillTemplate = document.querySelector('.skills')
+
+var addSkillHandler = function(evt) {
+  var prevSkill = last('.skill')
+  var newSkill = skillTemplate.cloneNode(true)
+  var submitNode = document.querySelector('.submit')
+  var parentNode = submitNode.parentNode
+
+  prevSkill.querySelector('.add-skill').classList.add('hidden')
+  prevSkill.querySelector('.remove-skill').classList.remove('hidden')
+  parentNode.insertBefore(newSkill, submitNode)
+}
+addSkillButton.addEventListener('click', addSkillHandler)
+```
+
+If you head over to the browser, it should work! Sweet DOM manipulation.
+
+Now you're ready to remove some skills!
+
+### Removing a skill
+
+Much like we created an event handler for adding a skill, we will now just create one to remove a skill.
 
 
 ## Add submit event
@@ -908,3 +987,5 @@ Read [Getting Started with Node.js on Heroku][node-heroku] for more information.
 [sdjs-app]: //sandiegojs-vanilla-workshop.herokuapp.com
 [rails-api]: https://github.com/rails-api/rails-api
 [node-list]: https://developer.mozilla.org/en-US/docs/Web/API/NodeList
+[insert-before]: https://developer.mozilla.org/en-US/docs/Web/API/Node/insertBefore
+[class-list]: https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
