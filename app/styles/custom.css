@@ -12,3 +12,27 @@
 .hidden {
   display: none;
 }
+
+.response-wrapper {
+  font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.error {
+  background-color: #fcc;
+  border: solid 1px #c33;
+  border-radius: 0.5em;
+  color: #c33;
+  padding: 0.5em;
+}
+
+.success {
+  background-color: #dfd;
+  border: solid 1px #090;
+  border-radius: 0.5em;
+  color: #090;
+  padding: 0.5em;
+}
+
+.response {
+
+}
