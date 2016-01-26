@@ -1,0 +1,23 @@
+<!-- Mocha tests in the browser use unicode symbols for bullet points
+so unless you want weird character bullet points, we add this. It doesn't
+break anything with or without it. -->
+<meta charset="utf-8">
+<link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+<!-- This is where mocha inserts the test results that are styled with the css file above -->
+<div id="mocha"></div>
+<!-- This is where any fixtures we need for the test will be inserted into. Naturally,
+we won't want to cover the mocha test results so we position this bad boy off screen. -->
+<div id="test" style="position: fixed; top: 0; left: -99999px;">
+</div>
+<!-- We need to insert our testing dependencies here -->
+<script src="../node_modules/mocha/mocha.js"></script>
+<script src="../node_modules/chai/chai.js"></script>
+<script src="../node_modules/sinon-chai/lib/sinon-chai.js"></script>
+<script src="../node_modules/sinon/pkg/sinon.js"></script>
+<!-- We will using BDD-style assertions. See Mocha documentation for more info -->
+<script>mocha.setup('bdd');</script>
+<!-- The source file we will be testing! -->
+<script src="../public/index.js"></script>
+<!-- Our test suite needs to be after the source file, of course -->
+<script src="index.spec.js"></script>
+<script>mocha.run();</script>
