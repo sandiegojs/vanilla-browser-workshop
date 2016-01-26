@@ -11,7 +11,8 @@ function serve() {
 
   server.start()
 
-  gulp.watch('public/index.html', (file) => {
+  gulp.watch('app/index.html', (file) => {
+    html()
     server.notify.apply(server, [file])
   })
 
