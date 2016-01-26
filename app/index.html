@@ -1,0 +1,57 @@
+<html>
+<head>
+  <title>Vanilla</title>
+  <link href='index.css' rel='stylesheet' media='screen' type='text/css'>
+</head>
+<body>
+  <script async='true' src='index.js'></script>
+  <div class='container'>
+    <div class='form-wrapper'>
+      <form name="form" class='form'>
+        <div class='input-group name'>
+          <input name="name" type='text' placeholder='Name'>
+        </div>
+
+        <div class='input-group email'>
+          <input name="email" type='text' placeholder='Email'>
+        </div>
+
+        <div class='input-group city'>
+          <input name="city" type='text' placeholder='City'>
+        </div>
+
+        <div class='input-group state'>
+          <input name="state" type='text' placeholder='State'>
+        </div>
+
+        <div class='input-group github'>
+          <input name="github" type='text' placeholder='Github username'>
+        </div>
+
+        <div class='input-group twitter'>
+          <input name="twitter" type='text' placeholder='Twitter username'>
+        </div>
+
+        <div class='input-group bio'>
+          <textarea name='bio' rows='4'></textarea>
+        </div>
+
+        <div class='input-group skills'>
+          <input name='skills_attributes' type='text' placeholder='Skill'>
+          <div class='add-skill'>
+            <div class='icon-plus'></div>
+          </div>
+          <div class='remove-skill hidden'>
+            <div class='icon-minus'></div>
+          </div>
+        </div>
+
+        <div class='input-group submit'>
+          <input type='submit' value='Submit'>
+        </div>
+      </form>
+    </div>
+    <div class="response-wrapper"></div>
+  </div>
+</body>
+</html>
