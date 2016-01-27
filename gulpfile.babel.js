@@ -11,11 +11,11 @@ function serve() {
 
   server.start()
 
-  gulp.watch('app/index.html', (file) => {
-    html()
+  gulp.task('applyHtml', (file) => {
     server.notify.apply(server, [file])
   })
 
+  gulp.watch(['app/index.html'], ['html', 'applyHtml'])
   gulp.watch(['app/**/*.js'], ['scripts'])
   gulp.watch(['app/**/*.css'], ['styles'])
 }
