@@ -11,7 +11,8 @@ function serve() {
 
   server.start()
 
-  gulp.watch('public/index.html', (file) => {
+  gulp.watch('app/index.html', (file) => {
+    html()
     server.notify.apply(server, [file])
   })
 
@@ -19,8 +20,15 @@ function serve() {
   gulp.watch(['app/**/*.css'], ['styles'])
 }
 
+function html() {
+  gulp.src('app/index.html')
+    .pipe(gulp.dest('public'));
+}
+
 gulp.task('serve', serve)
 
-gulp.task('build', ['scripts','styles'])
+gulp.task('html', html)
 
-gulp.task('default', ['scripts','styles','serve'])
+gulp.task('build', ['scripts','styles', 'html'])
+
+gulp.task('default', ['build','serve'])

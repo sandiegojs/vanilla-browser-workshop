@@ -2,3 +2,5 @@ node_modules
 .jshintrc
 public
 .idea
+.gitkeep
+*.log
