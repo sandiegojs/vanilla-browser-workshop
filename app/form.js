@@ -1,32 +1,39 @@
-var apiURL = '//sandiegojs-vanilla-workshop.herokuapp.com'
 var form = document.querySelector('form')
+var apiURL = '//sandiegojs-vanilla-workshop.herokuapp.com'
 
+var submitHandler = function(evt) {
+  evt.preventDefault()
+  var path = apiURL + '/forms'
+  xhr('POST', path, serializeArray('form'), function(err, data) {
+    if (err) { throw err }
+    console.log(data)
+  })
+}
 var serializeArray = function(selector) {
   var form = document.querySelector(selector)
   var formInputs = form.querySelectorAll('input:not([type=submit]),textarea')
 
   // Empty object for us to set key values of inputs
-  var data = {
-    "form": {}
-  }
+  var data = {}
 
   for (var i = 0; i < formInputs.length; i++) {
     var item = formInputs[i]
 
     if (item.name === 'skills_attributes') {
-      if (!!data['form'][item.name]) {
-        data['form'][item.name].push(item.value)
+      if (!!data[item.name]) {
+        data[item.name].push(item.value)
       } else {
-        data['form'][item.name] = [item.value]
+        data[item.name] = [item.value]
       }
     } else {
-      data['form'][item.name] = item.value
+      data[item.name] = item.value
     }
   }
 
-  return data
+  return {
+    "form": data
+  }
 }
-
 var xhr = function(method, path, data, callback) {
   var request = new XMLHttpRequest()
   request.open(method, path, true)
@@ -44,15 +51,6 @@ var xhr = function(method, path, data, callback) {
     callback(null, JSON.parse(request.responseText))
   }
   request.send(JSON.stringify(data))
-}
-
-var submitHandler = function(evt) {
-  evt.preventDefault()
-  var path = apiURL + '/forms'
-  xhr('POST', path, serializeArray('form'), function(err, data) {
-    if (err) { throw err }
-    console.log(data)
-  })
 }
 
 form.addEventListener('submit', submitHandler)
