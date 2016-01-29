@@ -6,19 +6,21 @@ var serializeArray = function(selector) {
   var formInputs = form.querySelectorAll('input:not([type=submit]),textarea')
 
   // Empty object for us to set key values of inputs
-  var data = {}
+  var data = {
+    "form": {}
+  }
 
   for (var i = 0; i < formInputs.length; i++) {
     var item = formInputs[i]
 
     if (item.name === 'skills_attributes') {
-      if (!!data[item.name]) {
-        data[item.name].push(item.value)
+      if (!!data['form'][item.name]) {
+        data['form'][item.name].push(item.value)
       } else {
-        data[item.name] = [item.value]
+        data['form'][item.name] = [item.value]
       }
     } else {
-      data[item.name] = item.value
+      data['form'][item.name] = item.value
     }
   }
 
@@ -41,7 +43,7 @@ var xhr = function(method, path, data, callback) {
     // return our server data
     callback(null, JSON.parse(request.responseText))
   }
-  request.send(data)
+  request.send(JSON.stringify(data))
 }
 
 var submitHandler = function(evt) {
