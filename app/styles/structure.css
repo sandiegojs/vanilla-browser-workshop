@@ -1,0 +1,9 @@
+.content {
+  display: flex;
+}
+.content .form-wrapper {
+  width: 16rem;
+}
+.content .response-wrapper {
+  width: 20rem;
+}
